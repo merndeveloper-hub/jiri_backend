@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pro Registration Payment Failed</title>
+</head>
+<body style="font-family: Arial, sans-serif; background:#f8f9fa; padding:20px;">
+  <div style="max-width:600px; margin:auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+    
+    <h2 style="color:#dc3545;">Payment Failed, {{user}} ❌</h2>
+    <p>Unfortunately, your payment for Pro account registration was <strong>not successful</strong>.</p>
+    
+    <p>Payment Method: <strong>{{paymentMethod}}</strong><br/>
+    Reason: <strong>{{failureReason}}</strong></p>
+    
+    <p>Please try again or contact our support team if the issue persists.</p>
+    
+    <a href="{{paymentRetryLink}}" style="display:inline-block; background:#dc3545; color:#fff; padding:10px 20px; text-decoration:none; border-radius:5px; margin-top:15px;">Retry Payment</a>
+    
+    <p style="margin-top:20px;">We're here to help if you need anything.</p>
+    
+    <p>Regards,<br/>The FirstStab Team</p>
+    
+    <hr style="border:none; border-top:1px solid #ddd; margin:20px 0;">
+    <p style="color:#888; font-size:12px;">FirstStab Inc, California<br/>This is an automated message, please do not reply.</p>
+  </div>
+</body>
+</html>

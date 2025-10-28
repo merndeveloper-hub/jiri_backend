@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTP Verification</title>
+  </head>
+  <body>
+    <div
+      style="
+        font-family: Helvetica, Arial, sans-serif;
+        /* //min-width: 1000px; */
+        max-width: 600px; 
+        margin:auto;
+        overflow: auto;
+        line-height: 2;
+      "
+    >
+      <div style="margin: 50px auto; width: 70%; padding: 20px 0">
+        <div style="border-bottom: 1px solid #eee">
+          <a
+            href=""
+            style="
+              font-size: 1.4em;
+              color: #00466a;
+              text-decoration: none;
+              font-weight: 600;
+            "
+            >FirstStab Otp</a
+          >
+        </div>
+        <p style="font-size: 1.1em">Hi {{user}},</p>
+        <p style="font-size: 0.9em; color: #555">
+          Thank you for choosing FirstStab. Use the following OTP to complete
+          your SignUp procedures. OTP is valid for 1 hour.
+        </p>
+        <p style="font-size: 0.9em; color: #555">
+          This OTP is confidential. Do not share it with anyone. If you did not
+          request this, please ignore this email or contact
+          <a href="mailto:support@firststab.com">support@firststab.com</a>.
+        </p>
+        <h2
+          style="
+            background: #00466a;
+            margin: 0 auto;
+            width: max-content;
+            padding: 0 10px;
+            color: #fff;
+            border-radius: 4px;
+          "
+        >
+          {{otp}}
+        </h2>
+        <p style="font-size: 0.9em">Regards,<br />FirstStab</p>
+        <hr style="border: none; border-top: 1px solid #eee" />
+        <div
+          style="
+            float: right;
+            padding: 8px 0;
+            color: #aaa;
+            font-size: 0.8em;
+            line-height: 1;
+            font-weight: 300;
+          "
+        >
+          <p>FirstStab Inc</p>
+          <p>1600 Amphitheatre Parkway</p>
+          <p>California</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- Your One Time Password(OTP) for logging into Firststab application is ###userOTP###. -->
