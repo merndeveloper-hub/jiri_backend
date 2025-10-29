@@ -23,8 +23,8 @@ const verifyMagicLink = async (req, res) => {
 
   try {
 
-    await schema.validateAsync(req.body)
-    const { userEmail, otp } = req.body;
+    await schema.validateAsync(req.query)
+    const { userEmail, otp } = req.query;
       if (!userEmail || !otp) {
         return res.status(400).send({ status: 400, message: "Both email and OTP are required" });
       }

@@ -1,0 +1,1570 @@
+// ============================================
+// LUNEBI COMPLETE API - Node.js + MongoDB + Firebase Auth
+// ============================================
+
+const express = require('express');
+const mongoose = require('mongoose');
+const admin = require('firebase-admin');
+const multer = require('multer');
+const AWS = require('aws-sdk');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const axios = require('axios');
+
+const app = express();
+app.use(express.json());
+
+// Initialize Firebase Admin
+admin.initializeApp({
+  credential: admin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+  })
+});
+
+// AWS S3 Configuration
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION
+});
+
+// ============================================
+// MONGODB SCHEMAS
+// ============================================
+
+// User Schema (replaces DynamoDB users table)
+const userSchema = new mongoose.Schema({
+  firebaseUid: { type: String, required: true, unique: true },
+  email: { type: String, required: true },
+  name: String,
+  plan: { type: String, enum: ['free', 'pro', 'family'], default: 'free' },
+  subscriptionStatus: { type: String, enum: ['active', 'cancelled', 'expired'], default: 'active' },
+  stripeCustomerId: String,
+  stripeSubscriptionId: String,
+  voiceId: String, // Reference to cloned voice
+  favorites: [{ type: String }], // Array of story IDs
+  limits: {
+    free_plays_used_month: { type: Number, default: 0 },
+    cloned_plays_used_month: { type: Number, default: 0 },
+    month_key: String // "YYYY-MM"
+  },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
+});
+
+// Story Schema
+const storySchema = new mongoose.Schema({
+  storyId: { type: String, required: true, unique: true },
+  title: { type: String, required: true },
+  description: String,
+  category: { type: String, enum: ['Bedtime & Sleep', 'Adventure & Exploration', 'Friendship & Family', 'Magic & Fantasy', 'Animals & Nature'] },
+  ageGroup: { type: String, enum: ['2-3', '4-5', '6-8'] },
+  duration: { type: String, enum: ['short', 'medium', 'long'] }, // 2-3min, 4-6min, 7-10min
+  durationMin: Number,
+  mood: { type: String, enum: ['Calm/Soothing', 'Happy/Playful', 'Curious/Imaginative', 'Comforting'] },
+  textContent: String,
+  audioLinks: {
+    male: String, // Pre-recorded male voice URL
+    female: String // Pre-recorded female voice URL
+  },
+  languages: [{ type: String, default: ['cs'] }],
+  isPro: { type: Boolean, default: false },
+  thumbnailUrl: String,
+  createdAt: { type: Date, default: Date.now }
+});
+
+// Voice Profile Schema
+const voiceProfileSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  firebaseUid: { type: String, required: true },
+  voiceId: { type: String, required: true }, // From Runtime API
+  name: { type: String, default: 'My Voice' },
+  status: { type: String, enum: ['training', 'ready', 'failed', 'deleted'], default: 'training' },
+  modelPath: String,
+  sampleUrls: [String],
+  createdAt: { type: Date, default: Date.now }
+});
+
+// Plays/Usage Tracking Schema
+const playSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  firebaseUid: { type: String, required: true },
+  storyId: { type: String, required: true },
+  voiceType: { type: String, enum: ['default', 'cloned', 'preset'], default: 'default' },
+  monthKey: String, // "YYYY-MM"
+  timestamp: { type: Date, default: Date.now }
+});
+
+// Consents Schema
+const consentSchema = new mongoose.Schema({
+  firebaseUid: { type: String, required: true },
+  consentKey: { type: String, required: true }, // e.g., "voice_clone#1.0"
+  type: { type: String, required: true },
+  version: String,
+  acceptedAt: { type: Date, default: Date.now },
+  jurisdiction: String,
+  ip: String,
+  userAgent: String
+});
+
+// Jobs Schema (for GDPR export/delete)
+const jobSchema = new mongoose.Schema({
+  jobId: { type: String, required: true, unique: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  firebaseUid: { type: String, required: true },
+  type: { type: String, enum: ['export', 'delete', 'voice_train', 'tts_generate'], required: true },
+  status: { type: String, enum: ['queued', 'running', 'completed', 'failed'], default: 'queued' },
+  payload: mongoose.Schema.Types.Mixed,
+  resultUrl: String,
+  error: String,
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
+});
+
+// Generated Audio Cache Schema
+const audioCacheSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  storyId: { type: String, required: true },
+  voiceType: { type: String, required: true },
+  audioUrl: { type: String, required: true },
+  expiresAt: { type: Date, required: true }, // 30 days from generation
+  isFavorited: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now }
+});
+
+const User = mongoose.model('User', userSchema);
+const Story = mongoose.model('Story', storySchema);
+const VoiceProfile = mongoose.model('VoiceProfile', voiceProfileSchema);
+const Play = mongoose.model('Play', playSchema);
+const Consent = mongoose.model('Consent', consentSchema);
+const Job = mongoose.model('Job', jobSchema);
+const AudioCache = mongoose.model('AudioCache', audioCacheSchema);
+
+// ============================================
+// MIDDLEWARE
+// ============================================
+
+// Firebase JWT Authentication Middleware
+const authenticateFirebase = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ 
+      error: { code: 'UNAUTHORIZED', message: 'Missing or invalid token' } 
+    });
+  }
+  
+  const token = authHeader.split(' ')[1];
+  
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    req.firebaseUid = decodedToken.uid;
+    req.email = decodedToken.email;
+    
+    // Find or create user in MongoDB
+    let user = await User.findOne({ firebaseUid: decodedToken.uid });
+    if (!user) {
+      user = new User({
+        firebaseUid: decodedToken.uid,
+        email: decodedToken.email,
+        name: decodedToken.name
+      });
+      await user.save();
+    }
+    req.user = user;
+    
+    next();
+  } catch (error) {
+    return res.status(401).json({ 
+      error: { code: 'INVALID_TOKEN', message: 'Token verification failed' } 
+    });
+  }
+};
+
+// Rate Limiting
+const rateLimits = new Map();
+const rateLimit = (limit = 100, windowMs = 3600000) => {
+  return (req, res, next) => {
+    const key = req.firebaseUid || req.ip;
+    const now = Date.now();
+    const userLimit = rateLimits.get(key) || { count: 0, resetTime: now + windowMs };
+    
+    if (now > userLimit.resetTime) {
+      userLimit.count = 0;
+      userLimit.resetTime = now + windowMs;
+    }
+    
+    userLimit.count++;
+    rateLimits.set(key, userLimit);
+    
+    res.setHeader('X-RateLimit-Limit', limit);
+    res.setHeader('X-RateLimit-Remaining', Math.max(0, limit - userLimit.count));
+    res.setHeader('X-RateLimit-Reset', Math.floor(userLimit.resetTime / 1000));
+    
+    if (userLimit.count > limit) {
+      res.setHeader('Retry-After', Math.ceil((userLimit.resetTime - now) / 1000));
+      return res.status(429).json({ 
+        error: { code: 'RATE_LIMIT_EXCEEDED', message: 'Too many requests' } 
+      });
+    }
+    
+    next();
+  };
+};
+
+// Helper: Check Plan Limits
+const checkPlayLimit = async (user, voiceType) => {
+  const currentMonth = new Date().toISOString().slice(0, 7); // "YYYY-MM"
+  
+  if (user.limits.month_key !== currentMonth) {
+    user.limits.free_plays_used_month = 0;
+    user.limits.cloned_plays_used_month = 0;
+    user.limits.month_key = currentMonth;
+    await user.save();
+  }
+  
+  if (user.plan === 'free') {
+    if (voiceType === 'cloned') {
+      return { allowed: false, reason: 'Free plan does not support cloned voices' };
+    }
+    // Free plan: unlimited preset plays
+    return { allowed: true };
+  }
+  
+  if (user.plan === 'pro') {
+    if (voiceType === 'cloned' && user.limits.cloned_plays_used_month >= 20) {
+      return { allowed: false, reason: 'Monthly cloned voice limit reached (20/month)' };
+    }
+    return { allowed: true };
+  }
+  
+  return { allowed: true };
+};
+
+// ============================================
+// 1) CATALOG APIs (Full-Stack Developer)
+// ============================================
+
+// GET /app/library - Browse stories with filters
+app.get('/app/library', async (req, res) => {
+  try {
+    const { category, age, duration, mood, search, page = 1, pageSize = 20, isPro } = req.query;
+    
+    const query = {};
+    if (category) query.category = category;
+    if (age) query.ageGroup = age;
+    if (duration) query.duration = duration;
+    if (mood) query.mood = mood;
+    if (search) query.title = { $regex: search, $options: 'i' };
+    if (isPro !== undefined) query.isPro = isPro === 'true';
+    
+    const total = await Story.countDocuments(query);
+    const stories = await Story.find(query)
+      .skip((page - 1) * pageSize)
+      .limit(parseInt(pageSize))
+      .sort('-createdAt');
+    
+    res.json({
+      items: stories.map(s => ({
+        id: s.storyId,
+        title: s.title,
+        description: s.description,
+        category: s.category,
+        ageGroup: s.ageGroup,
+        duration: s.duration,
+        durationMin: s.durationMin,
+        mood: s.mood,
+        isPro: s.isPro,
+        thumbnailUrl: s.thumbnailUrl,
+        audioLinks: s.audioLinks
+      })),
+      page: parseInt(page),
+      pageSize: parseInt(pageSize),
+      total
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// GET /app/library/:id - Get full story details
+app.get('/app/library/:id', async (req, res) => {
+  try {
+    const story = await Story.findOne({ storyId: req.params.id });
+    
+    if (!story) {
+      return res.status(404).json({ 
+        error: { code: 'STORY_NOT_FOUND', message: 'Story not found' } 
+      });
+    }
+    
+    res.json({
+      id: story.storyId,
+      title: story.title,
+      description: story.description,
+      category: story.category,
+      ageGroup: story.ageGroup,
+      duration: story.duration,
+      durationMin: story.durationMin,
+      mood: story.mood,
+      textContent: story.textContent,
+      audioLinks: story.audioLinks,
+      languages: story.languages,
+      isPro: story.isPro,
+      thumbnailUrl: story.thumbnailUrl
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// GET /app/facets - Precomputed filter counts
+app.get('/app/facets', async (req, res) => {
+  try {
+    const categories = await Story.aggregate([
+      { $group: { _id: '$category', count: { $sum: 1 } } }
+    ]);
+    
+    const ageGroups = await Story.aggregate([
+      { $group: { _id: '$ageGroup', count: { $sum: 1 } } }
+    ]);
+    
+    const durations = await Story.aggregate([
+      { $group: { _id: '$duration', count: { $sum: 1 } } }
+    ]);
+    
+    const moods = await Story.aggregate([
+      { $group: { _id: '$mood', count: { $sum: 1 } } }
+    ]);
+    
+    res.json({
+      categories: categories.map(c => ({ name: c._id, count: c.count })),
+      ageGroups: ageGroups.map(a => ({ name: a._id, count: a.count })),
+      durations: durations.map(d => ({ name: d._id, count: d.count })),
+      moods: moods.map(m => ({ name: m._id, count: m.count }))
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 2) FAVORITES APIs (Full-Stack Developer)
+// ============================================
+
+// GET /app/favorites - List user's favorites
+app.get('/app/favorites', authenticateFirebase, async (req, res) => {
+  try {
+    const user = req.user;
+    const stories = await Story.find({ storyId: { $in: user.favorites } });
+    
+    res.json({
+      favorites: stories.map(s => ({
+        id: s.storyId,
+        title: s.title,
+        description: s.description,
+        category: s.category,
+        thumbnailUrl: s.thumbnailUrl,
+        isPro: s.isPro
+      }))
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// POST /app/favorites - Add/remove favorite
+app.post('/app/favorites', authenticateFirebase, async (req, res) => {
+  try {
+    const { storyId, action } = req.body; // action: 'add' or 'remove'
+    const user = req.user;
+    
+    if (action === 'add') {
+      if (!user.favorites.includes(storyId)) {
+        user.favorites.push(storyId);
+        
+        // Mark audio cache as favorited (won't expire)
+        await AudioCache.updateMany(
+          { userId: user._id, storyId },
+          { isFavorited: true }
+        );
+      }
+    } else if (action === 'remove') {
+      user.favorites = user.favorites.filter(id => id !== storyId);
+      
+      await AudioCache.updateMany(
+        { userId: user._id, storyId },
+        { isFavorited: false }
+      );
+    }
+    
+    user.updatedAt = Date.now();
+    await user.save();
+    
+    res.json({ 
+      favorites: user.favorites,
+      message: action === 'add' ? 'Added to favorites' : 'Removed from favorites'
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 3) PLAN & BILLING APIs (Full-Stack Developer)
+// ============================================
+
+// GET /app/me/plan - Get current plan and usage
+app.get('/app/me/plan', authenticateFirebase, async (req, res) => {
+  try {
+    const user = req.user;
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    
+    if (user.limits.month_key !== currentMonth) {
+      user.limits.free_plays_used_month = 0;
+      user.limits.cloned_plays_used_month = 0;
+      user.limits.month_key = currentMonth;
+      await user.save();
+    }
+    
+    res.json({
+      plan: user.plan,
+      subscriptionStatus: user.subscriptionStatus,
+      limits: {
+        free_plays_used_month: user.limits.free_plays_used_month,
+        cloned_plays_used_month: user.limits.cloned_plays_used_month,
+        cloned_plays_limit: user.plan === 'pro' ? 20 : 0
+      },
+      voiceId: user.voiceId,
+      features: {
+        presetVoice: true,
+        clonedVoice: user.plan === 'pro' || user.plan === 'family',
+        voiceUploads: 1
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// POST /app/subscriptions/checkout - Create Stripe checkout session
+app.post('/app/subscriptions/checkout', authenticateFirebase, async (req, res) => {
+  try {
+    const user = req.user;
+    const { priceId } = req.body; // Stripe price ID for pro plan
+    
+    // Create or get Stripe customer
+    let customerId = user.stripeCustomerId;
+    if (!customerId) {
+      const customer = await stripe.customers.create({
+        email: user.email,
+        metadata: { firebaseUid: user.firebaseUid }
+      });
+      customerId = customer.id;
+      user.stripeCustomerId = customerId;
+      await user.save();
+    }
+    
+    // Create checkout session
+    const session = await stripe.checkout.sessions.create({
+      customer: customerId,
+      mode: 'subscription',
+      payment_method_types: ['card'],
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${process.env.APP_URL}/subscription/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.APP_URL}/subscription/cancel`,
+      metadata: { firebaseUid: user.firebaseUid }
+    });
+    
+    res.json({
+      sessionId: session.id,
+      url: session.url
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'STRIPE_ERROR', message: error.message } 
+    });
+  }
+});
+
+// POST /webhooks/stripe - Stripe webhook handler
+app.post('/webhooks/stripe', express.raw({ type: 'application/json' }), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  
+  try {
+    const event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+    
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object;
+      const firebaseUid = session.metadata.firebaseUid;
+      
+      const user = await User.findOne({ firebaseUid });
+      if (user) {
+        user.plan = 'pro';
+        user.subscriptionStatus = 'active';
+        user.stripeSubscriptionId = session.subscription;
+        await user.save();
+      }
+    }
+    
+    if (event.type === 'customer.subscription.deleted') {
+      const subscription = event.data.object;
+      const user = await User.findOne({ stripeSubscriptionId: subscription.id });
+      if (user) {
+        user.plan = 'free';
+        user.subscriptionStatus = 'cancelled';
+        await user.save();
+      }
+    }
+    
+    res.json({ received: true });
+  } catch (error) {
+    res.status(400).json({ 
+      error: { code: 'WEBHOOK_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 4) VOICE CLONING APIs (AWS Freelancer - via Runtime API)
+// ============================================
+
+const RUNTIME_API_URL = process.env.RUNTIME_API_URL || 'https://runtime-api.lunebi.com';
+
+// POST /runtime/voices/enroll - Upload voice sample for cloning
+app.post('/runtime/voices/enroll', authenticateFirebase, rateLimit(5), async (req, res) => {
+  try {
+    const { sampleUrls, name = 'My Voice', language = 'cs' } = req.body;
+    
+    // Check if user already has a voice
+    if (req.user.voiceId) {
+      return res.status(400).json({
+        error: { code: 'VOICE_EXISTS', message: 'User already has a voice profile' }
+      });
+    }
+    
+    // Record consent
+    const consent = new Consent({
+      firebaseUid: req.firebaseUid,
+      consentKey: 'voice_clone#1.0',
+      type: 'voice_clone',
+      version: '1.0',
+      jurisdiction: 'EU',
+      ip: req.ip,
+      userAgent: req.headers['user-agent']
+    });
+    await consent.save();
+    
+    // Call Runtime API
+    const response = await axios.post(`${RUNTIME_API_URL}/runtime/voices/enroll`, {
+      userId: req.firebaseUid,
+      sampleUrls,
+      name,
+      language
+    }, {
+      headers: { 'Authorization': req.headers.authorization }
+    });
+    
+    const voiceData = response.data;
+    
+    // Save voice profile
+    const voiceProfile = new VoiceProfile({
+      userId: req.user._id,
+      firebaseUid: req.firebaseUid,
+      voiceId: voiceData.voiceId,
+      name,
+      status: 'training',
+      sampleUrls
+    });
+    await voiceProfile.save();
+    
+    // Update user
+    req.user.voiceId = voiceData.voiceId;
+    await req.user.save();
+    
+    res.status(201).json({
+      voice: {
+        id: voiceData.voiceId,
+        name,
+        status: 'training'
+      },
+      job: voiceData.job
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'VOICE_ENROLL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// DELETE /runtime/voices/:id - Delete cloned voice
+app.delete('/runtime/voices/:id', authenticateFirebase, async (req, res) => {
+  try {
+    const voiceProfile = await VoiceProfile.findOne({
+      voiceId: req.params.id,
+      firebaseUid: req.firebaseUid
+    });
+    
+    if (!voiceProfile) {
+      return res.status(404).json({
+        error: { code: 'VOICE_NOT_FOUND', message: 'Voice not found' }
+      });
+    }
+    
+    // Call Runtime API to delete
+    await axios.delete(`${RUNTIME_API_URL}/runtime/voices/${req.params.id}`, {
+      headers: { 'Authorization': req.headers.authorization }
+    });
+    
+    // Update status
+    voiceProfile.status = 'deleted';
+    await voiceProfile.save();
+    
+    // Clear user's voiceId
+    req.user.voiceId = null;
+    await req.user.save();
+    
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'VOICE_DELETE_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 5) STORY GENERATION APIs (AWS Freelancer - via Runtime API)
+// ============================================
+
+// POST /runtime/stories/prepare - Prepare story with voice
+app.post('/runtime/stories/prepare', authenticateFirebase, rateLimit(10), async (req, res) => {
+  try {
+    const { storyId, voiceType = 'preset', voiceId } = req.body;
+    const user = req.user;
+    
+    // Check limits
+    const limitCheck = await checkPlayLimit(user, voiceType);
+    if (!limitCheck.allowed) {
+      return res.status(403).json({
+        error: { code: 'LIMIT_EXCEEDED', message: limitCheck.reason }
+      });
+    }
+    
+    // Check if cached audio exists
+    const cachedAudio = await AudioCache.findOne({
+      userId: user._id,
+      storyId,
+      voiceType,
+      expiresAt: { $gt: new Date() }
+    });
+    
+    if (cachedAudio) {
+      return res.json({
+        status: 'ready',
+        audioUrl: cachedAudio.audioUrl,
+        cached: true
+      });
+    }
+    
+    // Call Runtime API to generate
+    const response = await axios.post(`${RUNTIME_API_URL}/runtime/stories/prepare`, {
+      storyId,
+      userId: req.firebaseUid,
+      voiceType,
+      voiceId: voiceType === 'cloned' ? voiceId : undefined
+    }, {
+      headers: { 'Authorization': req.headers.authorization }
+    });
+    
+    const jobData = response.data;
+    
+    // Track play
+    const play = new Play({
+      userId: user._id,
+      firebaseUid: req.firebaseUid,
+      storyId,
+      voiceType,
+      monthKey: new Date().toISOString().slice(0, 7)
+    });
+    await play.save();
+    
+    // Update limits
+    if (voiceType === 'cloned') {
+      user.limits.cloned_plays_used_month += 1;
+    }
+    await user.save();
+    
+    res.json({
+      jobId: jobData.jobId,
+      status: 'processing',
+      etaSeconds: jobData.etaSeconds
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'STORY_PREPARE_ERROR', message: error.message } 
+    });
+  }
+});
+
+// GET /runtime/stories/:id/status - Check story generation status
+app.get('/runtime/stories/:id/status', authenticateFirebase, async (req, res) => {
+  try {
+    const response = await axios.get(
+      `${RUNTIME_API_URL}/runtime/stories/${req.params.id}/status`,
+      { headers: { 'Authorization': req.headers.authorization } }
+    );
+    
+    const statusData = response.data;
+    
+    // If completed, cache the audio
+    if (statusData.status === 'completed' && statusData.audioUrl) {
+      const story = await Story.findOne({ storyId: req.params.id });
+      
+      const cache = new AudioCache({
+        userId: req.user._id,
+        storyId: req.params.id,
+        voiceType: statusData.voiceType || 'preset',
+        audioUrl: statusData.audioUrl,
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+        isFavorited: req.user.favorites.includes(req.params.id)
+      });
+      await cache.save();
+    }
+    
+    res.json(statusData);
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'STATUS_CHECK_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 6) COMPLIANCE APIs (Full-Stack Developer)
+// ============================================
+
+// POST /app/me/export - Export user data (GDPR)
+app.post('/app/me/export', authenticateFirebase, async (req, res) => {
+  try {
+    const user = req.user;
+    const jobId = `job_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    
+    // Create export job
+    const job = new Job({
+      jobId,
+      userId: user._id,
+      firebaseUid: req.firebaseUid,
+      type: 'export',
+      status: 'queued',
+      payload: { includeAudio: false }
+    });
+    await job.save();
+    
+    // Gather data
+    const favorites = await Story.find({ storyId: { $in: user.favorites } });
+    const consents = await Consent.find({ firebaseUid: req.firebaseUid });
+    const plays = await Play.find({ firebaseUid: req.firebaseUid }).limit(100);
+    const voiceProfile = await VoiceProfile.findOne({ firebaseUid: req.firebaseUid });
+    
+    const exportData = {
+      user: {
+        email: user.email,
+        name: user.name,
+        plan: user.plan,
+        createdAt: user.createdAt
+      },
+      favorites: favorites.map(s => ({ id: s.storyId, title: s.title })),
+      consents: consents.map(c => ({ type: c.type, acceptedAt: c.acceptedAt })),
+      recentPlays: plays.map(p => ({ storyId: p.storyId, timestamp: p.timestamp })),
+      voiceProfile: voiceProfile ? { id: voiceProfile.voiceId, status: voiceProfile.status } : null,
+      exportedAt: new Date().toISOString()
+    };
+    
+    // In production, upload to S3 and send email
+    const exportJson = JSON.stringify(exportData, null, 2);
+    
+    // Update job status
+    job.status = 'completed';
+    job.resultUrl = 'data:application/json;base64,' + Buffer.from(exportJson).toString('base64');
+    job.updatedAt = Date.now();
+    await job.save();
+    
+    res.json({
+      jobId: job.jobId,
+      status: 'completed',
+      data: exportData,
+      message: 'Export completed. In production, this will be emailed to you.'
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'EXPORT_ERROR', message: error.message } 
+    });
+  }
+});
+
+// DELETE /app/me - Schedule account deletion (GDPR)
+app.delete('/app/me', authenticateFirebase, async (req, res) => {
+  try {
+    const user = req.user;
+    const jobId = `job_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    
+    // Create deletion job
+    const job = new Job({
+      jobId,
+      userId: user._id,
+      firebaseUid: req.firebaseUid,
+      type: 'delete',
+      status: 'queued'
+    });
+    await job.save();
+    
+    // Delete voice from Runtime API if exists
+    if (user.voiceId) {
+      try {
+        await axios.delete(`${RUNTIME_API_URL}/runtime/voices/${user.voiceId}`, {
+          headers: { 'Authorization': req.headers.authorization }
+        });
+      } catch (err) {
+        console.error('Voice deletion error:', err);
+      }
+    }
+    
+    // Delete all user data
+    await Promise.all([
+      VoiceProfile.deleteMany({ firebaseUid: req.firebaseUid }),
+      Play.deleteMany({ firebaseUid: req.firebaseUid }),
+      Consent.deleteMany({ firebaseUid: req.firebaseUid }),
+      AudioCache.deleteMany({ userId: user._id }),
+      Job.deleteMany({ firebaseUid: req.firebaseUid, type: { $ne: 'delete' } })
+    ]);
+    
+    // Delete user record
+    await User.deleteOne({ _id: user._id });
+    
+    // Delete from Firebase Auth
+    try {
+      await admin.auth().deleteUser(req.firebaseUid);
+    } catch (err) {
+      console.error('Firebase user deletion error:', err);
+    }
+    
+    // Update job
+    job.status = 'completed';
+    job.updatedAt = Date.now();
+    await job.save();
+    
+    res.json({
+      message: 'Account deleted successfully',
+      jobId: job.jobId
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'DELETE_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 7) USAGE & SETTINGS APIs (Full-Stack Developer)
+// ============================================
+
+// GET /app/usage - Get detailed usage stats
+app.get('/app/usage', authenticateFirebase, async (req, res) => {
+  try {
+    const user = req.user;
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    
+    const plays = await Play.aggregate([
+      { $match: { firebaseUid: req.firebaseUid, monthKey: currentMonth } },
+      { $group: { 
+          _id: '$voiceType', 
+          count: { $sum: 1 } 
+        } 
+      }
+    ]);
+    
+    const playsByType = {};
+    plays.forEach(p => {
+      playsByType[p._id] = p.count;
+    });
+    
+    res.json({
+      month: currentMonth,
+      plan: user.plan,
+      plays: {
+        preset: playsByType.preset || 0,
+        cloned: playsByType.cloned || 0,
+        total: (playsByType.preset || 0) + (playsByType.cloned || 0)
+      },
+      limits: {
+        clonedPlaysLimit: user.plan === 'pro' ? 20 : 0,
+        clonedPlaysUsed: user.limits.cloned_plays_used_month
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// PATCH /app/me - Update user settings
+app.patch('/app/me', authenticateFirebase, async (req, res) => {
+  try {
+    const { name, language } = req.body;
+    const user = req.user;
+    
+    if (name) user.name = name;
+    if (language) user.language = language;
+    user.updatedAt = Date.now();
+    
+    await user.save();
+    
+    res.json({
+      id: user.firebaseUid,
+      email: user.email,
+      name: user.name,
+      language: user.language,
+      plan: user.plan
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// GET /app/me - Get current user info
+app.get('/app/me', authenticateFirebase, async (req, res) => {
+  try {
+    const user = req.user;
+    const voiceProfile = await VoiceProfile.findOne({ firebaseUid: req.firebaseUid });
+    
+    res.json({
+      id: user.firebaseUid,
+      email: user.email,
+      name: user.name,
+      plan: user.plan,
+      subscriptionStatus: user.subscriptionStatus,
+      limits: user.limits,
+      voice: voiceProfile ? {
+        id: voiceProfile.voiceId,
+        name: voiceProfile.name,
+        status: voiceProfile.status
+      } : null,
+      favoritesCount: user.favorites.length,
+      createdAt: user.createdAt
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 8) CONSENTS APIs (Full-Stack Developer)
+// ============================================
+
+// POST /app/consents - Record user consent
+app.post('/app/consents', authenticateFirebase, async (req, res) => {
+  try {
+    const { type, version, jurisdiction } = req.body;
+    
+    const consent = new Consent({
+      firebaseUid: req.firebaseUid,
+      consentKey: `${type}#${version}`,
+      type,
+      version,
+      jurisdiction: jurisdiction || 'US',
+      ip: req.ip,
+      userAgent: req.headers['user-agent']
+    });
+    
+    await consent.save();
+    
+    res.status(201).json({
+      type,
+      version,
+      acceptedAt: consent.acceptedAt,
+      message: 'Consent recorded'
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// GET /app/consents - Get user consents
+app.get('/app/consents', authenticateFirebase, async (req, res) => {
+  try {
+    const consents = await Consent.find({ firebaseUid: req.firebaseUid });
+    
+    res.json({
+      consents: consents.map(c => ({
+        type: c.type,
+        version: c.version,
+        acceptedAt: c.acceptedAt,
+        jurisdiction: c.jurisdiction
+      }))
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 9) JOBS APIs (Full-Stack Developer)
+// ============================================
+
+// GET /app/jobs/:id - Get job status
+app.get('/app/jobs/:id', authenticateFirebase, async (req, res) => {
+  try {
+    const job = await Job.findOne({ 
+      jobId: req.params.id, 
+      firebaseUid: req.firebaseUid 
+    });
+    
+    if (!job) {
+      return res.status(404).json({
+        error: { code: 'JOB_NOT_FOUND', message: 'Job not found' }
+      });
+    }
+    
+    res.json({
+      jobId: job.jobId,
+      type: job.type,
+      status: job.status,
+      resultUrl: job.resultUrl,
+      error: job.error,
+      createdAt: job.createdAt,
+      updatedAt: job.updatedAt
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// GET /app/jobs - List user jobs
+app.get('/app/jobs', authenticateFirebase, async (req, res) => {
+  try {
+    const { type, status } = req.query;
+    
+    const query = { firebaseUid: req.firebaseUid };
+    if (type) query.type = type;
+    if (status) query.status = status;
+    
+    const jobs = await Job.find(query).sort('-createdAt').limit(20);
+    
+    res.json({
+      jobs: jobs.map(j => ({
+        jobId: j.jobId,
+        type: j.type,
+        status: j.status,
+        createdAt: j.createdAt
+      }))
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 10) UPLOADS APIs (AWS Freelancer - S3 Presigned URLs)
+// ============================================
+
+// POST /app/uploads/presign - Get presigned URL for file upload
+app.post('/app/uploads/presign', authenticateFirebase, async (req, res) => {
+  try {
+    const { files, purpose } = req.body; // purpose: 'voice_sample' | 'audio'
+    
+    if (!files || !Array.isArray(files)) {
+      return res.status(400).json({
+        error: { code: 'INVALID_REQUEST', message: 'Files array required' }
+      });
+    }
+    
+    const urls = [];
+    
+    for (const file of files) {
+      const key = `${purpose}/${req.firebaseUid}/${Date.now()}_${file.name}`;
+      
+      const params = {
+        Bucket: process.env.AWS_S3_BUCKET,
+        Key: key,
+        Expires: 3600, // 1 hour
+        ContentType: file.type
+      };
+      
+      const uploadUrl = s3.getSignedUrl('putObject', params);
+      
+      urls.push({
+        name: file.name,
+        url: uploadUrl,
+        key: key
+      });
+    }
+    
+    res.json({
+      urls,
+      maxBytes: 20000000, // 20MB
+      expiresIn: 3600
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'PRESIGN_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 11) AUDIO CACHE MANAGEMENT (Full-Stack Developer)
+// ============================================
+
+// GET /app/audio/cache/:storyId - Get cached audio for story
+app.get('/app/audio/cache/:storyId', authenticateFirebase, async (req, res) => {
+  try {
+    const { voiceType = 'preset' } = req.query;
+    
+    const cache = await AudioCache.findOne({
+      userId: req.user._id,
+      storyId: req.params.storyId,
+      voiceType,
+      expiresAt: { $gt: new Date() }
+    });
+    
+    if (!cache) {
+      return res.status(404).json({
+        error: { code: 'CACHE_NOT_FOUND', message: 'No cached audio found' }
+      });
+    }
+    
+    res.json({
+      audioUrl: cache.audioUrl,
+      expiresAt: cache.expiresAt,
+      isFavorited: cache.isFavorited
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// DELETE /app/audio/cache - Clear expired cache
+app.delete('/app/audio/cache', authenticateFirebase, async (req, res) => {
+  try {
+    const result = await AudioCache.deleteMany({
+      userId: req.user._id,
+      isFavorited: false,
+      expiresAt: { $lt: new Date() }
+    });
+    
+    res.json({
+      message: 'Cache cleared',
+      deletedCount: result.deletedCount
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 12) ADMIN APIs (Full-Stack Developer)
+// ============================================
+
+// Middleware to check admin role
+const requireAdmin = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ firebaseUid: req.firebaseUid });
+    if (!user || user.role !== 'admin') {
+      return res.status(403).json({
+        error: { code: 'FORBIDDEN', message: 'Admin access required' }
+      });
+    }
+    next();
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+};
+
+// POST /admin/stories - Create new story (admin only)
+app.post('/admin/stories', authenticateFirebase, requireAdmin, async (req, res) => {
+  try {
+    const storyData = req.body;
+    
+    const story = new Story({
+      storyId: `st_${Date.now()}`,
+      ...storyData
+    });
+    
+    await story.save();
+    
+    res.status(201).json({
+      message: 'Story created',
+      story: {
+        id: story.storyId,
+        title: story.title
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// PATCH /admin/stories/:id - Update story (admin only)
+app.patch('/admin/stories/:id', authenticateFirebase, requireAdmin, async (req, res) => {
+  try {
+    const story = await Story.findOneAndUpdate(
+      { storyId: req.params.id },
+      { ...req.body, updatedAt: Date.now() },
+      { new: true }
+    );
+    
+    if (!story) {
+      return res.status(404).json({
+        error: { code: 'STORY_NOT_FOUND', message: 'Story not found' }
+      });
+    }
+    
+    res.json({
+      message: 'Story updated',
+      story: {
+        id: story.storyId,
+        title: story.title
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// GET /admin/stats - Get platform statistics (admin only)
+app.get('/admin/stats', authenticateFirebase, requireAdmin, async (req, res) => {
+  try {
+    const totalUsers = await User.countDocuments();
+    const proUsers = await User.countDocuments({ plan: 'pro' });
+    const totalStories = await Story.countDocuments();
+    const totalPlays = await Play.countDocuments();
+    const voicesCreated = await VoiceProfile.countDocuments({ status: 'ready' });
+    
+    res.json({
+      users: {
+        total: totalUsers,
+        free: totalUsers - proUsers,
+        pro: proUsers
+      },
+      stories: totalStories,
+      plays: totalPlays,
+      voices: voicesCreated
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: { code: 'INTERNAL_ERROR', message: error.message } 
+    });
+  }
+});
+
+// ============================================
+// 13) HEALTH & UTILITIES (Full-Stack Developer)
+// ============================================
+
+// GET /health - Health check
+app.get('/health', async (req, res) => {
+  try {
+    // Check MongoDB connection
+    const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+    
+    res.json({ 
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+      version: '1.0.0',
+      services: {
+        database: dbStatus,
+        runtime_api: 'external'
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      status: 'error',
+      message: error.message 
+    });
+  }
+});
+
+// GET /app/feature-flags - Get feature flags
+app.get('/app/feature-flags', (req, res) => {
+  res.json({
+    flags: {
+      voice_cloning: true,
+      family_sharing: false,
+      offline_mode: true,
+      analytics: true
+    }
+  });
+});
+
+// ============================================
+// 14) SCHEDULED JOBS (Background Tasks)
+// ============================================
+
+// Clean expired audio cache (run daily via cron)
+const cleanExpiredCache = async () => {
+  try {
+    const result = await AudioCache.deleteMany({
+      isFavorited: false,
+      expiresAt: { $lt: new Date() }
+    });
+    console.log(`🧹 Cleaned ${result.deletedCount} expired audio cache entries`);
+  } catch (error) {
+    console.error('Cache cleanup error:', error);
+  }
+};
+
+// Reset monthly limits (run on 1st of each month)
+const resetMonthlyLimits = async () => {
+  try {
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    
+    await User.updateMany(
+      { 'limits.month_key': { $ne: currentMonth } },
+      { 
+        $set: { 
+          'limits.free_plays_used_month': 0,
+          'limits.cloned_plays_used_month': 0,
+          'limits.month_key': currentMonth
+        }
+      }
+    );
+    
+    console.log('📅 Monthly limits reset');
+  } catch (error) {
+    console.error('Monthly reset error:', error);
+  }
+};
+
+// Schedule jobs (using node-cron in production)
+// const cron = require('node-cron');
+// cron.schedule('0 0 * * *', cleanExpiredCache); // Daily at midnight
+// cron.schedule('0 0 1 * *', resetMonthlyLimits); // 1st of each month
+
+// ============================================
+// ERROR HANDLER
+// ============================================
+
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  
+  res.status(err.status || 500).json({
+    error: {
+      code: err.code || 'INTERNAL_ERROR',
+      message: err.message || 'An unexpected error occurred',
+      details: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    }
+  });
+});
+
+// ============================================
+// DATABASE CONNECTION & SERVER START
+// ============================================
+
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/lunebi';
+
+mongoose.connect(MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  console.log('✅ MongoDB connected');
+  
+  // Create indexes
+  Story.createIndexes();
+  User.createIndexes();
+  Play.createIndexes();
+  AudioCache.createIndexes();
+  
+  app.listen(PORT, () => {
+    console.log(`🚀 Lunebi API running on port ${PORT}`);
+    console.log(`📝 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🔥 Firebase Auth enabled`);
+    console.log(`💳 Stripe integration ready`);
+    console.log(`☁️  AWS S3 configured`);
+  });
+})
+.catch(err => {
+  console.error('❌ MongoDB connection error:', err);
+  process.exit(1);
+});
+
+module.exports = app;
+
+
+------------------------------------------------------
+
+Perfect! Ab main aapko complete setup guide bhi de raha hoon:
+📦 Required NPM Packages
+bashnpm install express mongoose firebase-admin aws-sdk stripe axios multer cors helmet dotenv express-rate-limit node-cron bcrypt jsonwebtoken
+🔧 Environment Variables (.env)
+bash# Server
+NODE_ENV=development
+PORT=3000
+
+# MongoDB
+MONGODB_URI=mongodb://localhost:27017/lunebi
+
+# Firebase Admin SDK
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk@your-project.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+
+# AWS
+AWS_ACCESS_KEY_ID=your-aws-key
+AWS_SECRET_ACCESS_KEY=your-aws-secret
+AWS_REGION=us-east-1
+AWS_S3_BUCKET=lunebi-audio
+
+# Stripe
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# Runtime API
+RUNTIME_API_URL=https://runtime-api.lunebi.com
+
+# App URL
+APP_URL=https://app.lunebi.com
+📊 Complete API Endpoints Summary
+Full-Stack Developer APIs (aap banaoge):
+Catalog (Public)
+
+✅ GET /app/library - Browse stories with filters
+✅ GET /app/library/:id - Get story details
+✅ GET /app/facets - Filter counts
+
+Favorites (Authenticated)
+
+✅ GET /app/favorites - List favorites
+✅ POST /app/favorites - Add/remove favorite
+
+Plan & Billing
+
+✅ GET /app/me/plan - Get current plan
+✅ POST /app/subscriptions/checkout - Create Stripe checkout
+✅ POST /webhooks/stripe - Stripe webhook
+
+User Management
+
+✅ GET /app/me - Get user info
+✅ PATCH /app/me - Update settings
+✅ GET /app/usage - Usage statistics
+
+Compliance (GDPR)
+
+✅ POST /app/me/export - Export user data
+✅ DELETE /app/me - Delete account
+
+Consents
+
+✅ POST /app/consents - Record consent
+✅ GET /app/consents - Get consents
+
+Jobs
+
+✅ GET /app/jobs/:id - Get job status
+✅ GET /app/jobs - List jobs
+
+Audio Cache
+
+✅ GET /app/audio/cache/:storyId - Get cached audio
+✅ DELETE /app/audio/cache - Clear cache
+
+Admin APIs
+
+✅ POST /admin/stories - Create story
+✅ PATCH /admin/stories/:id - Update story
+✅ GET /admin/stats - Platform stats
+
+Utilities
+
+✅ GET /health - Health check
+✅ GET /app/feature-flags - Feature flags
+
+
+AWS Freelancer APIs (Runtime API integration):
+Voice Cloning
+
+✅ POST /runtime/voices/enroll - Upload voice sample
+✅ DELETE /runtime/voices/:id - Delete voice
+
+Story Generation
+
+✅ POST /runtime/stories/prepare - Generate story audio
+✅ GET /runtime/stories/:id/status - Check generation status
+
+Uploads
+
+✅ POST /app/uploads/presign - Get S3 presigned URLs
+
+
+🎯 Key Features Implemented:
+
+✅ Firebase Authentication - Google & Apple Sign-In
+✅ Plan Management - Free, Pro, Family plans
+✅ Usage Limits - Monthly play tracking
+✅ Voice Cloning - Via Runtime API
+✅ Audio Caching - 30-day expiration
+✅ Favorites System - Prevents cache expiration
+✅ Stripe Integration - Subscriptions + webhooks
+✅ GDPR Compliance - Export & delete
+✅ Admin Panel - Story management
+✅ Rate Limiting - Prevent abuse
+
+
+🚀 How to Run:
+bash# Install dependencies
+npm install
+
+# Set environment variables
+cp .env.example .env
+# Edit .env with your values
+
+# Start MongoDB (if local)
+mongod
+
+# Run server
+npm start
+
+# Or for development with auto-reload
+npm run dev  # (requires nodemon)

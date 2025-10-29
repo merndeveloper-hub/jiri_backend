@@ -22,7 +22,7 @@ const router = express.Router();
 router.post("/verifyotp",  verifyOTP);
 
 //----------User and Pro Verify OTP --------------------//
-router.post("/verifyMagicLink",  verifyMagicLink);
+router.get("/verifyMagicLink",  verifyMagicLink);
 
 //----------User and Pro forgot Password Send OTP--------------------//
 router.post("/sendotp",  sendOTPForgotPasswd);
