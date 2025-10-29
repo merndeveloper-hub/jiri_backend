@@ -1,7 +1,7 @@
 // import  userOTP  from "../../../models/index.js";
 // import user from'../../../models/index.js';
 
-import bcrypt from "bcryptjs";
+//import bcrypt from "bcryptjs";
 import {
   deleteManyDocument,
   insertNewDocument,
@@ -19,7 +19,7 @@ const schema = Joi.object({
 });
 
 
-const verifyOTP = async (req, res) => {
+const verifyMagicLink = async (req, res) => {
 
   try {
 
@@ -55,14 +55,18 @@ const verifyOTP = async (req, res) => {
           });
           return res.status(400).send({ status: 400, message: "Code has expired. Please request again" });
       
-        } else {
-          const validOTP = await bcrypt.compare(otp, hashedOTP);
-          console.log(validOTP,"validotp------------------");
+        }
+        
+        else {
+        //   const validOTP = await bcrypt.compare(otp, hashedOTP);
+        //   console.log(validOTP,"validotp------------------");
           
-          if (!validOTP) {
-            // supplied otp is wrong
-            return res.status(400).send({ status: 400, message: "The OTP you entered is invalid. Please check your inbox and try again." });
-          } else {
+        //   if (!validOTP) {
+        //     // supplied otp is wrong
+        //     return res.status(400).send({ status: 400, message: "The OTP you entered is invalid. Please check your inbox and try again." });
+        //   } 
+          
+        //  else {
             // success
             console.log("1");
             
@@ -113,7 +117,7 @@ const verifyOTP = async (req, res) => {
           console.log("3");
             res.status(200).json({
               status: 200,
-              message: "OTP verified successfully.",
+              message: "Magic Link verified successfully.",
               data:{
                 user,
                 token, refresh_token
@@ -122,7 +126,7 @@ const verifyOTP = async (req, res) => {
           }
         }
       }
-    }
+  //  }
   } catch (error) {
     res.status(400).json({
       status: 400,
@@ -131,4 +135,4 @@ const verifyOTP = async (req, res) => {
   }
 };
 
-export default verifyOTP;
+export default verifyMagicLink;

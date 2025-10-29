@@ -10,6 +10,7 @@ import sendOTPForgotPasswd from "./otpVerification/sendOTPForgotPasswd.js";
 
 // const addWalletAddress = require("./signup/add-wallet-address");
 import userSignup from "./signup/userSignup.js";
+import verifyMagicLink from "./otpVerification/verifyMagicLink.js";
 // import proSignup from "./signup/proSignup.js";
 // import logout from "./logout/index.js";
 const router = express.Router();
@@ -19,6 +20,9 @@ const router = express.Router();
 
 //----------User and Pro Verify OTP --------------------//
 router.post("/verifyotp",  verifyOTP);
+
+//----------User and Pro Verify OTP --------------------//
+router.post("/verifyMagicLink",  verifyMagicLink);
 
 //----------User and Pro forgot Password Send OTP--------------------//
 router.post("/sendotp",  sendOTPForgotPasswd);

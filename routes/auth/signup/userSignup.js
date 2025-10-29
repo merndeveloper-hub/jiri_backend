@@ -6,11 +6,13 @@ import {
   getAggregate,
   deleteDocument,
 } from "../../../helpers/index.js";
-//import { JWT_EXPIRES_IN, JWT_EXPIRES_IN_REFRESH_TOKEN, REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } from "../../../config/index.js";
-//import jwt from "jsonwebtoken";
+import { JWT_EXPIRES_IN, JWT_EXPIRES_IN_REFRESH_TOKEN, REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } from "../../../config/index.js";
+import jwt from "jsonwebtoken";
 //import bcrypt from "bcryptjs";
-import mongoose from "mongoose";
+//import mongoose from "mongoose";
 import sendOTPSignup from "../otpVerification/sendOTPSignup.js";
+
+import magicLinkSend from "../otpVerification/magicLink.js";
 
 const schema = Joi.object({
   // first_Name: Joi.string().min(3).required(),
@@ -24,7 +26,7 @@ const schema = Joi.object({
       "any.required": "Email is required",
       "string.pattern.base": "Invalid email structure",
     }),
-  // mobile: Joi.string()
+  magicLink: Joi.boolean(),
 
   //   .required()
   //   .messages({
@@ -71,6 +73,7 @@ const userSignup = async (req, res) => {
     const {
       country,
       password,
+      magicLink,
       email,
       mobile,
       status,
@@ -85,11 +88,13 @@ const userSignup = async (req, res) => {
     // }
 
     const emailExist = await findOneAndSelect("user", { email});
-    if (emailExist) {
-      return res
-        .status(400)
-        .send({ status: 400, message: "User already exists with this email" });
-    }
+    if (!emailExist) {
+    const user = await insertNewDocument("user", {
+   
+      email,
+    
+   
+    });    }
     // const mobileExist = await findOneAndSelect("user", { mobile, status: "Active" });
     // if (mobileExist) {
     //   return res
@@ -117,57 +122,75 @@ const userSignup = async (req, res) => {
     //     },
     //   },
     // ]);
-    const user = await insertNewDocument("user", {
+    const user = await findOne("user", {
    
       email,
     
    
     });
 
-    console.log(user, "user");
+    // console.log(user, "user");
 
-  // var token = jwt.sign({ id: user._id, role: user.userType }, ACCESS_TOKEN_SECRET, {
-  //            expiresIn: JWT_EXPIRES_IN,
-  //          });
-  //          var refresh_token = jwt.sign({ id: user._id, role: user.userType }, REFRESH_TOKEN_SECRET, {
-  //            expiresIn: JWT_EXPIRES_IN_REFRESH_TOKEN,
-  //          });
+  var token = jwt.sign({ id: user._id, role: user }, ACCESS_TOKEN_SECRET, {
+             expiresIn: JWT_EXPIRES_IN,
+           });
+           var refresh_token = jwt.sign({ id: user._id, role: user }, REFRESH_TOKEN_SECRET, {
+             expiresIn: JWT_EXPIRES_IN_REFRESH_TOKEN,
+           });
  
-  // const inserttoken = await insertNewDocument("token", {
-  //        user_id: user._id,
-  //        accessToken: token,
-  //        refreshToken: refresh_token,
-  //        type: "refresh",
-  //      });
+  const inserttoken = await insertNewDocument("token", {
+         user_id: user._id,
+         accessToken: token,
+         refreshToken: refresh_token,
+         type: "refresh",
+       });
  
-  //            // Set Access Token in Cookie
-  //      res.cookie("token", token, {
-  //        httpOnly: true,
-  //        secure: process.env.NODE_ENV === "production" ? true : false, // sirf prod me https
-  //        sameSite: "none",
-  //        maxAge: 1000 * 60 * 60 * 24 // 1 day (ya JWT_EXPIRES_IN ke hisaab se)
-  //      });
+             // Set Access Token in Cookie
+       res.cookie("token", token, {
+         httpOnly: true,
+         secure: process.env.NODE_ENV === "production" ? true : false, // sirf prod me https
+         sameSite: "none",
+         maxAge: 1000 * 60 * 60 * 24 // 1 day (ya JWT_EXPIRES_IN ke hisaab se)
+       });
  
-  //      // Set Refresh Token in Cookie (optional)
-  //      res.cookie("refreshToken", refresh_token, {
-  //        httpOnly: true,
-  //        secure: process.env.NODE_ENV === "production" ? true : false,
-  //        sameSite: "none",
-  //        maxAge: 1000 * 60 * 60 * 24 * 7 // 7 din
-  //      });
+       // Set Refresh Token in Cookie (optional)
+       res.cookie("refreshToken", refresh_token, {
+         httpOnly: true,
+         secure: process.env.NODE_ENV === "production" ? true : false,
+         sameSite: "none",
+         maxAge: 1000 * 60 * 60 * 24 * 7 // 7 din
+       });
  
     req.userId = user._id;
-    await sendOTPSignup({ email, userType })
-   // await session.commitTransaction();
-   // session.endSession();
-    return res.json({
-      status: 200,
-      message: "OTP sent to your email. Check inbox to proceed.",
-      data: {
-         user,
-       //   token, refresh_token
-      },
-    });
+if(magicLink){
+  console.log("1");
+  
+ await magicLinkSend({ email })
+  // await session.commitTransaction();
+  // session.endSession();
+  return res.json({
+    status: 200,
+    message: "Magic Link sent to your email. Check inbox to proceed.",
+    data: {
+       user,
+     //  token, refresh_token
+    },
+  });
+}else {
+
+  await sendOTPSignup({ email })
+  // await session.commitTransaction();
+  // session.endSession();
+  return res.json({
+    status: 200,
+    message: "OTP sent to your email. Check inbox to proceed.",
+    data: {
+       user,
+     //  token, refresh_token
+    },
+  });
+}
+
     //   return res.status(200).send({ status: 200, data:{user, token} });
   } catch (error) {
  //  await session.abortTransaction();

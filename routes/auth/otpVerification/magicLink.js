@@ -1,10 +1,10 @@
 
-import bcrypt from "bcryptjs";
+//import bcrypt from "bcryptjs";
 import send_email from "../../../lib/node-mailer/index.js";
 import { insertNewDocument,findOne } from "../../../helpers/index.js";
+import crypto from "crypto";
 
-
-const sendOTP = async (req, res) => {
+const magicLinkSend = async (req, res) => {
 
   
   try {
@@ -20,23 +20,26 @@ const sendOTP = async (req, res) => {
     //   return res.status(400).send({ status: 400, message: "Invalid Email" });
     // }
 
-    const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
-console.log(otp, "otp");
+//     const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
+// console.log(otp, "otp");
 
  
 
     // hash the otp
-    const saltRounds = 10;
+    // const saltRounds = 10;
 
-    const hashedOTP = await bcrypt.hash(otp, saltRounds);
-    console.log(hashedOTP, "hashedOTP");
+    // const hashedOTP = await bcrypt.hash(otp, saltRounds);
+    // console.log(hashedOTP, "hashedOTP");
+const users = {};
+   const token = crypto.randomBytes(20).toString("hex");
+  users[token] = { email, expires: Date.now() + 15 * 60 * 1000 }; // 15 min valid
 
-   
+  const link = `http://localhost:3000/login?token=${token}`;
 
     const otpRes = await insertNewDocument("userOTP", {
       userEmail: email,
      // userType:userType,
-      otp: hashedOTP,
+      otp: token,
       status:"Pending",
       createdAt: Date.now(),
       expiresAt: Date.now() + 3600000,
@@ -46,11 +49,11 @@ console.log(otp, "otp");
     await send_email(
       "otpTemplate",
       {
-        otp: otp,
+        otp: link,
        //user:user?.first_Name
       },
       "owaisy028@gmail.com",
-      "Your lunibi OTP Code",
+      "Your lunibi Magic Link ",
       email
     );
 console.log("finalres");
@@ -71,4 +74,4 @@ console.log("finalres");
   }
 };
 
-export default sendOTP;
+export default magicLinkSend;
