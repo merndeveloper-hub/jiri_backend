@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import attemptSchema from "./attemptsSchema.js";
 
-const attempt = mongoose.model("attempt", attemptSchema);
+const attempts = mongoose.model("attempts", attemptSchema);
 
-export default attempt;
+export default attempts;

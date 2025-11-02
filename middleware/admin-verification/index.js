@@ -58,3 +58,28 @@ const adminVerification = async (req, res, next) => {
 };
 
 export default adminVerification;
+
+
+// / ============================================
+// // ADMIN MIDDLEWARE - requireAdmin
+// // ============================================
+// const requireAdmin = async (req, res, next) => {
+//   try {
+//     const user = await User.findOne({ firebaseUid: req.firebaseUid });
+//     if (!user || user.role !== 'admin') {
+//       return res.status(403).send({
+//         status: 403,
+//         message: 'Admin access required'
+//       });
+//     }
+//     next();
+//   } catch (error) {
+//     console.error("Error checking admin access:", error);
+//     return res.status(500).send({ 
+//       status: 500, 
+//       message: error.message || "An unexpected error occurred."
+//     });
+//   }
+// };
+
+// export { requireAdmin };

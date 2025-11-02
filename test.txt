@@ -32,106 +32,367 @@ const s3 = new AWS.S3({
 // ============================================
 // MONGODB SCHEMAS
 // ============================================
+import mongoose from "mongoose";
+import SchemaType from "../../types/index.js";
 
 // User Schema (replaces DynamoDB users table)
-const userSchema = new mongoose.Schema({
-  firebaseUid: { type: String, required: true, unique: true },
-  email: { type: String, required: true },
-  name: String,
-  plan: { type: String, enum: ['free', 'pro', 'family'], default: 'free' },
-  subscriptionStatus: { type: String, enum: ['active', 'cancelled', 'expired'], default: 'active' },
-  stripeCustomerId: String,
-  stripeSubscriptionId: String,
-  voiceId: String, // Reference to cloned voice
-  favorites: [{ type: String }], // Array of story IDs
-  limits: {
-    free_plays_used_month: { type: Number, default: 0 },
-    cloned_plays_used_month: { type: Number, default: 0 },
-    month_key: String // "YYYY-MM"
+const userSchema = new mongoose.Schema(
+  {
+    firebaseUid: {
+      type: SchemaType.TypeString,
+      required: true,
+      unique: true,
+      index: true,
+    },
+    email: {
+      type: SchemaType.TypeString,
+      required: true,
+    },
+    name: {
+      type: SchemaType.TypeString,
+    },
+    plan: {
+      type: SchemaType.TypeString,
+      enum: ["free", "pro", "family"],
+      default: "free",
+    },
+    subscriptionStatus: {
+      type: SchemaType.TypeString,
+      enum: ["active", "cancelled", "expired"],
+      default: "active",
+    },
+    stripeCustomerId: {
+      type: SchemaType.TypeString,
+    },
+    stripeSubscriptionId: {
+      type: SchemaType.TypeString,
+    },
+    voiceId: {
+      type: SchemaType.TypeString,
+    },
+    favorites: [
+      {
+        type: SchemaType.TypeString,
+      },
+    ],
+    limits: {
+      free_plays_used_month: {
+        type: SchemaType.TypeNumber,
+        default: 0,
+      },
+      cloned_plays_used_month: {
+        type: SchemaType.TypeNumber,
+        default: 0,
+      },
+      month_key: {
+        type: SchemaType.TypeString,
+      },
+    },
   },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
-});
+  { timestamps: true }
+);
 
 // Story Schema
-const storySchema = new mongoose.Schema({
-  storyId: { type: String, required: true, unique: true },
-  title: { type: String, required: true },
-  description: String,
-  category: { type: String, enum: ['Bedtime & Sleep', 'Adventure & Exploration', 'Friendship & Family', 'Magic & Fantasy', 'Animals & Nature'] },
-  ageGroup: { type: String, enum: ['2-3', '4-5', '6-8'] },
-  duration: { type: String, enum: ['short', 'medium', 'long'] }, // 2-3min, 4-6min, 7-10min
-  durationMin: Number,
-  mood: { type: String, enum: ['Calm/Soothing', 'Happy/Playful', 'Curious/Imaginative', 'Comforting'] },
-  textContent: String,
-  audioLinks: {
-    male: String, // Pre-recorded male voice URL
-    female: String // Pre-recorded female voice URL
+const storySchema = new mongoose.Schema(
+  {
+    storyId: {
+      type: SchemaType.TypeString,
+      required: true,
+      unique: true,
+      index: true,
+    },
+    title: {
+      type: SchemaType.TypeString,
+      required: true,
+    },
+    description: {
+      type: SchemaType.TypeString,
+    },
+    category: {
+      type: SchemaType.TypeString,
+      enum: [
+        "Bedtime & Sleep",
+        "Adventure & Exploration",
+        "Friendship & Family",
+        "Magic & Fantasy",
+        "Animals & Nature",
+      ],
+    },
+    ageGroup: {
+      type: SchemaType.TypeString,
+      enum: ["2-3", "4-5", "6-8"],
+    },
+    duration: {
+      type: SchemaType.TypeString,
+      enum: ["short", "medium", "long"],
+    },
+    durationMin: {
+      type: SchemaType.TypeNumber,
+    },
+    mood: {
+      type: SchemaType.TypeString,
+      enum: ["Calm/Soothing", "Happy/Playful", "Curious/Imaginative", "Comforting"],
+    },
+    textContent: {
+      type: SchemaType.TypeString,
+    },
+    audioLinks: {
+      male: {
+        type: SchemaType.TypeString,
+      },
+      female: {
+        type: SchemaType.TypeString,
+      },
+    },
+    languages: [
+      {
+        type: SchemaType.TypeString,
+        default: ["cs"],
+      },
+    ],
+    isPro: {
+      type: SchemaType.TypeBoolean,
+      default: false,
+    },
+    thumbnailUrl: {
+      type: SchemaType.TypeString,
+    },
   },
-  languages: [{ type: String, default: ['cs'] }],
-  isPro: { type: Boolean, default: false },
-  thumbnailUrl: String,
-  createdAt: { type: Date, default: Date.now }
-});
+  { timestamps: true }
+);
 
 // Voice Profile Schema
-const voiceProfileSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  firebaseUid: { type: String, required: true },
-  voiceId: { type: String, required: true }, // From Runtime API
-  name: { type: String, default: 'My Voice' },
-  status: { type: String, enum: ['training', 'ready', 'failed', 'deleted'], default: 'training' },
-  modelPath: String,
-  sampleUrls: [String],
-  createdAt: { type: Date, default: Date.now }
-});
+const voiceProfileSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: SchemaType.ObjectID,
+      ref: "User",
+      required: true,
+    },
+    firebaseUid: {
+      type: SchemaType.TypeString,
+      required: true,
+      index: true,
+    },
+    voiceId: {
+      type: SchemaType.TypeString,
+      required: true,
+    },
+    name: {
+      type: SchemaType.TypeString,
+      default: "My Voice",
+    },
+    status: {
+      type: SchemaType.TypeString,
+      enum: ["training", "ready", "failed", "deleted"],
+      default: "training",
+    },
+    modelPath: {
+      type: SchemaType.TypeString,
+    },
+    sampleUrls: [
+      {
+        type: SchemaType.TypeString,
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
 // Plays/Usage Tracking Schema
-const playSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  firebaseUid: { type: String, required: true },
-  storyId: { type: String, required: true },
-  voiceType: { type: String, enum: ['default', 'cloned', 'preset'], default: 'default' },
-  monthKey: String, // "YYYY-MM"
-  timestamp: { type: Date, default: Date.now }
-});
+const playSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: SchemaType.ObjectID,
+      ref: "User",
+      required: true,
+    },
+    firebaseUid: {
+      type: SchemaType.TypeString,
+      required: true,
+      index: true,
+    },
+    storyId: {
+      type: SchemaType.TypeString,
+      required: true,
+      index: true,
+    },
+    voiceType: {
+      type: SchemaType.TypeString,
+      enum: ["default", "cloned", "preset"],
+      default: "default",
+    },
+    monthKey: {
+      type: SchemaType.TypeString,
+      index: true,
+    },
+    timestamp: {
+      type: SchemaType.TypeDate,
+      default: Date.now,
+    },
+  },
+  { timestamps: true }
+);
 
 // Consents Schema
-const consentSchema = new mongoose.Schema({
-  firebaseUid: { type: String, required: true },
-  consentKey: { type: String, required: true }, // e.g., "voice_clone#1.0"
-  type: { type: String, required: true },
-  version: String,
-  acceptedAt: { type: Date, default: Date.now },
-  jurisdiction: String,
-  ip: String,
-  userAgent: String
-});
+const consentSchema = new mongoose.Schema(
+  {
+    firebaseUid: {
+      type: SchemaType.TypeString,
+      required: true,
+      index: true,
+    },
+    consentKey: {
+      type: SchemaType.TypeString,
+      required: true,
+    },
+    type: {
+      type: SchemaType.TypeString,
+      required: true,
+    },
+    version: {
+      type: SchemaType.TypeString,
+    },
+    acceptedAt: {
+      type: SchemaType.TypeDate,
+      default: Date.now,
+    },
+    jurisdiction: {
+      type: SchemaType.TypeString,
+    },
+    ip: {
+      type: SchemaType.TypeString,
+    },
+    userAgent: {
+      type: SchemaType.TypeString,
+    },
+  },
+  { timestamps: true }
+);
 
 // Jobs Schema (for GDPR export/delete)
-const jobSchema = new mongoose.Schema({
-  jobId: { type: String, required: true, unique: true },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  firebaseUid: { type: String, required: true },
-  type: { type: String, enum: ['export', 'delete', 'voice_train', 'tts_generate'], required: true },
-  status: { type: String, enum: ['queued', 'running', 'completed', 'failed'], default: 'queued' },
-  payload: mongoose.Schema.Types.Mixed,
-  resultUrl: String,
-  error: String,
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
-});
+const jobSchema = new mongoose.Schema(
+  {
+    jobId: {
+      type: SchemaType.TypeString,
+      required: true,
+      unique: true,
+      index: true,
+    },
+    userId: {
+      type: SchemaType.ObjectID,
+      ref: "User",
+      required: true,
+    },
+    firebaseUid: {
+      type: SchemaType.TypeString,
+      required: true,
+      index: true,
+    },
+    type: {
+      type: SchemaType.TypeString,
+      enum: ["export", "delete", "voice_train", "tts_generate"],
+      required: true,
+    },
+    status: {
+      type: SchemaType.TypeString,
+      enum: ["queued", "running", "completed", "failed"],
+      default: "queued",
+    },
+    payload: {
+      type: SchemaType.TypeMixed,
+    },
+    resultUrl: {
+      type: SchemaType.TypeString,
+    },
+    error: {
+      type: SchemaType.TypeString,
+    },
+  },
+  { timestamps: true }
+);
 
 // Generated Audio Cache Schema
-const audioCacheSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  storyId: { type: String, required: true },
-  voiceType: { type: String, required: true },
-  audioUrl: { type: String, required: true },
-  expiresAt: { type: Date, required: true }, // 30 days from generation
-  isFavorited: { type: Boolean, default: false },
-  createdAt: { type: Date, default: Date.now }
-});
+const audioCacheSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: SchemaType.ObjectID,
+      ref: "User",
+      required: true,
+    },
+    storyId: {
+      type: SchemaType.TypeString,
+      required: true,
+      index: true,
+    },
+    voiceType: {
+      type: SchemaType.TypeString,
+      required: true,
+    },
+    audioUrl: {
+      type: SchemaType.TypeString,
+      required: true,
+    },
+    expiresAt: {
+      type: SchemaType.TypeDate,
+      required: true,
+    },
+    isFavorited: {
+      type: SchemaType.TypeBoolean,
+      default: false,
+    },
+  },
+  { timestamps: true }
+);
+
+// Attempt Schema (Login/Security)
+const attemptSchema = new mongoose.Schema(
+  {
+    user_id: {
+      type: SchemaType.ObjectID,
+      ref: "User",
+      required: true,
+    },
+    no_of_attempt: {
+      type: SchemaType.TypeNumber,
+      default: 0,
+      required: true,
+    },
+    block_duration: {
+      type: SchemaType.TypeDate,
+      default: Date.now,
+    },
+    block: {
+      type: SchemaType.TypeBoolean,
+      default: false,
+      enum: [true, false],
+    },
+  },
+  { timestamps: true }
+);
+
+export {
+  userSchema,
+  storySchema,
+  voiceProfileSchema,
+  playSchema,
+  consentSchema,
+  jobSchema,
+  audioCacheSchema,
+  attemptSchema,
+};
+
+// Export schemas if needed
+export {
+  userSchema,
+  storySchema,
+  voiceProfileSchema,
+  playSchema,
+  consentSchema,
+  jobSchema,
+  audioCacheSchema,
+  attemptSchema,
+};
 
 const User = mongoose.model('User', userSchema);
 const Story = mongoose.model('Story', storySchema);
@@ -1467,6 +1728,8 @@ RUNTIME_API_URL=https://runtime-api.lunebi.com
 APP_URL=https://app.lunebi.com
 📊 Complete API Endpoints Summary
 Full-Stack Developer APIs (aap banaoge):
+
+
 Catalog (Public)
 
 ✅ GET /app/library - Browse stories with filters

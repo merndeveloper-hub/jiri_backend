@@ -688,9 +688,7 @@ module.exports = app;
 
 --------------------------------------------------------------------
 
-Main aapko complete breakdown de raha hoon ke kaun si APIs kis ne banani hain aur Node.js + MongoDB ke saath kaise integrate hongi:
-APIs Breakdown by Developer
-AWS Freelancer APIs (Infrastructure-heavy, TTS, Storage)
+
 
 Voices (Voice Cloning) - /voices/*
 Fast Playback (HLS Streaming) - /stories/prepare, /stories/{id}/status
