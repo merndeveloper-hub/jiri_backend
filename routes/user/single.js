@@ -8,12 +8,14 @@ const getMe = async (req, res) => {
   try {
     const id = req.params.id;
     const user = await findOne("user", { _id: id })
-
+if(!user){
+  return res.json({status:400,message:"User not found"})
+}
     const voiceProfile = await findOne("voiceProfile", { userId: id });
 
     return res.status(200).send({
       status: 200,
-      id: user.firebaseUid,
+      id: id,
       email: user.email,
       name: user.name,
       plan: user.plan,
