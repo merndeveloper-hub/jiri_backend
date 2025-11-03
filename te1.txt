@@ -1439,21 +1439,20 @@ export const resetMonthlyLimits = async () => {
 
 
 [
+ [
   {
-    "PK": "STORY#henny_penny",
-    "SK": "META",
-    "type": "Story",
-    "story_id": "Leo and the Lost Crown",
     "title": "Leo and the Lost Crown",
+    "description": "Henny Penny was pecking at her corn one day when suddenly an acorn fell on her head. She thought the sky was falling and decided to tell the king...",
     "status": "PUBLISHED",
     "is_mock": false,
-    "categories": [
-      "Calm"
-      
-    ],
+    "category": "Calm",
     "age_min": 2,
     "age_max": 3,
+    "ageGroup": "2-3 years",
+    "duration": "short",
     "duration_s": 300,
+    "durationMin": 5,
+    "textContent": "Henny Penny was pecking at her corn one day when suddenly an acorn fell on her head. She thought the sky was falling and decided to tell the king...",
     "image_url": "https://img.freepik.com/free-vector/hand-drawn-bedtime-stories-illustration_52683-154364.jpg",
     "audio_url": "https://ia800905.us.archive.org/18/items/theraven_poem_librivox/raven_poe_bw_64kb.mp3",
     "assets": {
@@ -1461,226 +1460,215 @@ export const resetMonthlyLimits = async () => {
       "text": "Henny Penny was pecking at her corn one day when suddenly an acorn fell on her head. She thought the sky was falling and decided to tell the king..."
     },
     "isPro": false,
-    "tonightPic": true
+    "tonightPic": true,
+    "languages": ["cs"]
   },
   {
-    "PK": "STORY#little_match_girl",
-    "SK": "META",
-    "type": "Story",
-    "story_id": "Little_match_girl",
     "title": "The Little Match Girl",
+    "description": "It was the last evening of the year, and in the cold and darkness a poor little girl, with bare head and naked feet, roamed through the streets...",
     "status": "PUBLISHED",
     "is_mock": false,
-    "categories": [
-      "Calm"
-    ],
+    "category": "Calm",
     "age_min": 6,
     "age_max": 8,
+    "ageGroup": "6-8 years",
+    "duration": "medium",
     "duration_s": 420,
+    "durationMin": 7,
+    "textContent": "It was the last evening of the year, and in the cold and darkness a poor little girl, with bare head and naked feet, roamed through the streets...",
     "image_url": "https://i.ytimg.com/vi/EyRrm6yZ9GA/maxresdefault.jpg",
     "audio_url": "https://cdn.lunebi.com/stories/little_match_girl/final/story.m4a",
     "assets": {
       "final_m4a_url": "https://cdn.lunebi.com/stories/little_match_girl/final/story.m4a",
       "text": "It was the last evening of the year, and in the cold and darkness a poor little girl, with bare head and naked feet, roamed through the streets..."
     },
-    "isPro": true
+    "isPro": true,
+    "tonightPic": false,
+    "languages": ["cs"]
   },
   {
-    "PK": "STORY#three_bears",
-    "SK": "META",
-    "type": "Story",
-    "story_id": "Three_bears",
     "title": "Goldilocks and the Three Bears",
+    "description": "Once upon a time, there were three bears who lived in a house in the forest. One morning, after making porridge for breakfast...",
     "status": "PUBLISHED",
     "is_mock": false,
-    "categories": [
-      "Calm"
-    ],
+    "category": "Calm",
     "age_min": 3,
     "age_max": 6,
+    "ageGroup": "3-6 years",
+    "duration": "medium",
     "duration_s": 360,
+    "durationMin": 6,
+    "textContent": "Once upon a time, there were three bears who lived in a house in the forest. One morning, after making porridge for breakfast...",
     "image_url": "https://www.shutterstock.com/image-vector/three-bears-discover-goldilocks-sleeping-260nw-2456692901.jpg",
     "audio_url": "https://cdn.lunebi.com/stories/three_bears/final/story.m4a",
     "assets": {
       "final_m4a_url": "https://cdn.lunebi.com/stories/three_bears/final/story.m4a",
       "text": "Once upon a time, there were three bears who lived in a house in the forest. One morning, after making porridge for breakfast..."
     },
-    "isPro": true
+    "isPro": true,
+    "tonightPic": false,
+    "languages": ["cs"]
   },
   {
-    "PK": "STORY#three_little_pigs",
-    "SK": "META",
-    "type": "Story",
-    "story_id": "Three_little_pigs",
     "title": "The Three Little Pigs",
+    "description": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "status": "PUBLISHED",
     "is_mock": false,
-    "categories": [
-       "Calm"
-    ],
+    "category": "Calm",
     "age_min": 4,
     "age_max": 7,
+    "ageGroup": "4-7 years",
+    "duration": "medium",
     "duration_s": 480,
+    "durationMin": 8,
+    "textContent": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "image_url": "https://pandawhispers.com/images/bedtime-stories-for-kids/the-three-little-pigs.webp",
     "audio_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
     "assets": {
       "final_m4a_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
       "text": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw..."
     },
-    "isPro": false
+    "isPro": false,
+    "tonightPic": false,
+    "languages": ["cs"]
   },
   {
-    "PK": "STORY#three_little_pigs",
-    "SK": "META",
-    "type": "Story",
-    "story_id": "The_Magical_Wand",
     "title": "The Magical Wand",
+    "description": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "status": "PUBLISHED",
     "is_mock": false,
-    "categories": [
-      "Calm"
-    ],
+    "category": "Calm",
     "age_min": 4,
     "age_max": 7,
+    "ageGroup": "4-7 years",
+    "duration": "medium",
     "duration_s": 480,
+    "durationMin": 8,
+    "textContent": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "image_url": "https://i.ytimg.com/vi/_9EiSmFEGuE/maxresdefault.jpg",
     "audio_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
     "assets": {
       "final_m4a_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
       "text": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw..."
     },
-    "isPro": true
+    "isPro": true,
+    "tonightPic": false,
+    "languages": ["cs"]
   },
   {
-    "PK": "STORY#three_little_pigs",
-    "SK": "META",
-    "type": "Story",
-    "story_id": "Enchanched_Forest",
-    "title": "Enchanched Forest",
+    "title": "Enchanted Forest",
+    "description": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "status": "PUBLISHED",
     "is_mock": false,
-    "categories": [
-       "Calm"
-    ],
+    "category": "Calm",
     "age_min": 4,
     "age_max": 7,
+    "ageGroup": "4-7 years",
+    "duration": "medium",
     "duration_s": 480,
+    "durationMin": 8,
+    "textContent": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "image_url": "https://www.ravensburger.org/produktseiten/1024/22292.jpg",
     "audio_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
     "assets": {
       "final_m4a_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
       "text": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw..."
     },
-    "isPro": true
+    "isPro": true,
+    "tonightPic": false,
+    "languages": ["cs"]
   },
   {
-    "PK": "STORY#three_little_pigs",
-    "SK": "META",
-    "type": "Story",
-    "story_id": "Hidden_Castle",
     "title": "Hidden Castle",
+    "description": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "status": "PUBLISHED",
     "is_mock": false,
-    "categories": [
-      "Calm"
-    ],
+    "category": "Calm",
     "age_min": 4,
     "age_max": 7,
+    "ageGroup": "4-7 years",
+    "duration": "medium",
     "duration_s": 480,
+    "durationMin": 8,
+    "textContent": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "image_url": "https://ik.imagekit.io/storybird/images/595ba67e-bd31-41bd-8dd6-dac47d53d4e8/0_815119298.webp?tr=q-80",
     "audio_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
     "assets": {
       "final_m4a_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
       "text": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw..."
     },
-    "isPro": true
+    "isPro": true,
+    "tonightPic": false,
+    "languages": ["cs"]
   },
   {
-    "PK": "STORY#three_little_pigs",
-    "SK": "META",
-    "type": "Story",
-    "story_id": "Clever_Fox",
     "title": "Clever Fox",
+    "description": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "status": "PUBLISHED",
     "is_mock": false,
-    "categories": [
-      "Calm"
-    ],
+    "category": "Calm",
     "age_min": 4,
     "age_max": 7,
+    "ageGroup": "4-7 years",
+    "duration": "medium",
     "duration_s": 480,
+    "durationMin": 8,
+    "textContent": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "image_url": "https://i.ytimg.com/vi/sIVJL3KuYpk/sddefault.jpg",
     "audio_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
     "assets": {
       "final_m4a_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
       "text": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw..."
     },
-    "isPro": true
+    "isPro": true,
+    "tonightPic": false,
+    "languages": ["cs"]
   },
   {
-    "PK": "STORY#three_little_pigs",
-    "SK": "META",
-    "type": "Story",
-    "story_id": "Oceans_of_Secret",
     "title": "Oceans of Secret",
+    "description": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "status": "PUBLISHED",
     "is_mock": false,
-    "categories": [
-       "Calm"
-    ],
+    "category": "Calm",
     "age_min": 4,
     "age_max": 7,
+    "ageGroup": "4-7 years",
+    "duration": "medium",
     "duration_s": 480,
+    "durationMin": 8,
+    "textContent": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "image_url": "https://assets-prd.ignimgs.com/2024/07/22/takonohimitsu-1721663394913.jpg?crop=1%3A1%2Csmart&format=jpg&auto=webp&quality=80",
     "audio_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
     "assets": {
       "final_m4a_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
       "text": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw..."
     },
-    "isPro": false
+    "isPro": false,
+    "tonightPic": false,
+    "languages": ["cs"]
   },
   {
-    "PK": "STORY#three_little_pigs",
-    "SK": "META",
-    "type": "Story",
-    "story_id": "Secret_unicorn",
-    "title": "Secret_unicorn",
+    "title": "Secret Unicorn",
+    "description": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "status": "PUBLISHED",
     "is_mock": false,
-    "categories": [
-      "Calm"
-    ],
+    "category": "Calm",
     "age_min": 4,
     "age_max": 7,
+    "ageGroup": "4-7 years",
+    "duration": "medium",
     "duration_s": 480,
+    "durationMin": 8,
+    "textContent": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw...",
     "image_url": "https://ik.imagekit.io/storybird/images/bc46b865-be21-4123-b9ed-cce2fbf8546c/2_98968476.webp?tr=q-80",
     "audio_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
     "assets": {
       "final_m4a_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
       "text": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw..."
     },
-    "isPro": true
-  },
-  {
-    "PK": "STORY#three_little_pigs",
-    "SK": "META",
-    "type": "Story",
-    "story_id": "Secret_unicorn",
-    "title": "Secret_unicorn",
-    "status": "PUBLISHED",
-    "is_mock": false,
-    "categories": [
-      "Calm"
-    ],
-    "age_min": 4,
-    "age_max": 7,
-    "duration_s": 480,
-    "image_url": "https://ik.imagekit.io/storybird/images/bc46b865-be21-4123-b9ed-cce2fbf8546c/2_98968476.webp?tr=q-80",
-    "audio_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
-    "assets": {
-      "final_m4a_url": "https://cdn.lunebi.com/stories/three_little_pigs/final/story.m4a",
-      "text": "Once upon a time, there were three little pigs who set out to build their own houses. The first pig built a house of straw..."
-    },
-    "isPro": true
+    "isPro": true,
+    "tonightPic": false,
+    "languages": ["cs"]
   }
+]
 ]

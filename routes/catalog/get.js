@@ -2,10 +2,10 @@ import { getDataWithLimit,find } from "../../helpers/index.js";
 
 const getLibrary = async (req, res) => {
   try {
-    const { category, age, duration, mood, search, isPro } = req.query;
+    const { categories, age, duration, mood, search, isPro } = req.query;
     
     const query = {};
-    if (category) query.category = category;
+    if (categories) query.categories = categories;
     if (age) query.ageGroup = age;
     if (duration) query.duration = duration;
     if (mood) query.mood = mood;
@@ -37,7 +37,7 @@ const getLibrary = async (req, res) => {
         id: s.storyId || s._id,
         title: s.title,
         description: s.description,
-        category: s.category,
+        categories: s.categories,
         ageGroup: s.ageGroup,
         duration: s.duration,
         durationMin: s.durationMin,

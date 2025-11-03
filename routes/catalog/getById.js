@@ -22,7 +22,7 @@ const getStoryById = async (req, res) => {
         id: story.storyId,
         title: story.title,
         description: story.description,
-        category: story.category,
+        categories: story.categories,
         ageGroup: story.ageGroup,
         duration: story.duration,
         durationMin: story.durationMin,

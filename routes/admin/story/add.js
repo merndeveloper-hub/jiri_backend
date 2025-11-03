@@ -17,7 +17,7 @@ const createStorySchema = Joi.object({
   description: Joi.string().required(),
   status: Joi.string().valid("DRAFT", "PUBLISHED", "ARCHIVED").default("DRAFT"),
   is_mock: Joi.boolean().default(false),
-  category: Joi.string().required(),
+  categories: Joi.string().required(),
   ageGroup: Joi.string().required(),
   age_min: Joi.number().optional(),
   age_max: Joi.number().optional(),
