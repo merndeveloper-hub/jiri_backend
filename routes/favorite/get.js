@@ -1,8 +1,7 @@
 // ============================================
 // GET /app/favorites - Get user's favorite stories
 // ============================================
-import { findOne,find } from "../../helpers/index.js";
-
+import { findOne, find } from "../../helpers/index.js";
 
 const getFavorites = async (req, res) => {
   try {
@@ -32,22 +31,36 @@ const getFavorites = async (req, res) => {
     }
 
     // ✅ Find all stories by storyId
-    const stories = await find("story",{ storyId: { $in: storyIds } });
+    const stories = await find("story", { storyId: { $in: storyIds } });
 
-    // ✅ Format response
+    // ✅ Format response with all fields
     const favorites = stories.map(story => ({
       id: story._id.toString(),
       storyId: story.storyId,
       title: story.title,
       description: story.description,
+      status: story.status,
+      is_mock: story.is_mock,
       category: story.category,
+      categories: story.categories,
       ageGroup: story.ageGroup,
+      age_min: story.age_min,
+      age_max: story.age_max,
       duration: story.duration,
+      duration_s: story.duration_s,
       durationMin: story.durationMin,
       mood: story.mood,
-      isPro: story.isPro,
-      thumbnailUrl: story.thumbnailUrl,
+      textContent: story.textContent,
       audioLinks: story.audioLinks,
+      assets: story.assets,
+      languages: story.languages,
+      isPro: story.isPro,
+      tonightPic: story.tonightPic,
+      thumbnailUrl: story.thumbnailUrl,
+      image_url: story.image_url,
+      audio_url: story.audio_url,
+      createdAt: story.createdAt,
+      updatedAt: story.updatedAt,
       isFavorited: true
     }));
 

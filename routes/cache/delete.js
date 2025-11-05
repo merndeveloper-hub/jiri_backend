@@ -1,12 +1,16 @@
 // ============================================
 // AUDIO CACHE APIs - DELETE /app/audio/cache
 // ============================================
-import Joi from "joi";
+
+import { deleteManyDocument } from "../../helpers/index.js";
+
 
 const clearCache = async (req, res) => {
   try {
-    const result = await AudioCache.deleteMany({
-      userId: req.user._id,
+
+    const {id} = req.params
+    const result = await deleteManyDocument("audioCache",{
+      userId: id,
       isFavorited: false,
       expiresAt: { $lt: new Date() }
     });

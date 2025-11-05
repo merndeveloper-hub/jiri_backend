@@ -2,6 +2,10 @@
 // VOICE CLONING APIs - POST /runtime/voices/enroll
 // ============================================
 
+import Joi from "joi";
+import { findOne, insertNewDocument } from "../../helpers/index.js";
+import axios from "axios";
+
 const voiceEnrollSchema = Joi.object({
   sampleUrls: Joi.array().items(Joi.string()).required(),
   name: Joi.string().default('My Voice'),
@@ -10,11 +14,13 @@ const voiceEnrollSchema = Joi.object({
 
 const enrollVoice = async (req, res) => {
   try {
+    const RUNTIME_API_URL = process.env.RUNTIME_API_URL || 'https://runtime-api.lunebi.com';
     await voiceEnrollSchema.validateAsync(req.body);
-    
+    const {id} = req.params
     const { sampleUrls, name = 'My Voice', language = 'cs' } = req.body;
     
-    if (req.user.voiceId) {
+    const findVoice = await findOne("user",{_id:id})
+    if (findVoice.voiceId) {
       return res.status(400).send({
         status: 400,
         message: 'User already has a voice profile'
@@ -22,7 +28,8 @@ const enrollVoice = async (req, res) => {
     }
     
     const consent = await insertNewDocument("consent", {
-      firebaseUid: req.firebaseUid,
+   //   firebaseUid: req.firebaseUid,
+    userId: id,
       consentKey: 'voice_clone#1.0',
       type: 'voice_clone',
       version: '1.0',
@@ -31,8 +38,9 @@ const enrollVoice = async (req, res) => {
       userAgent: req.headers['user-agent']
     });
     
+    // is mein voice ai ke pass jati hain generator hone
     const response = await axios.post(`${RUNTIME_API_URL}/runtime/voices/enroll`, {
-      userId: req.firebaseUid,
+      userId: id,
       sampleUrls,
       name,
       language
@@ -40,19 +48,26 @@ const enrollVoice = async (req, res) => {
       headers: { 'Authorization': req.headers.authorization }
     });
     
-    const voiceData = response.data;
+    const voiceData = response?.data;
     
     const voiceProfile = await insertNewDocument("voiceProfile", {
-      userId: req.user._id,
-      firebaseUid: req.firebaseUid,
-      voiceId: voiceData.voiceId,
+      userId: id,
+    //  firebaseUid: req.firebaseUid,
+      voiceId: voiceData?.voiceId,
       name,
       status: 'training',
       sampleUrls
     });
     
-    req.user.voiceId = voiceData.voiceId;
-    await req.user.save();
+      const addVoice = await insertNewDocument("user", {
+      userId: id,
+    //  firebaseUid: req.firebaseUid,
+      voiceId: voiceData?.voiceId,
+     
+    });
+
+    // req.user.voiceId = voiceData.voiceId;
+    // await req.user.save();
     
     return res.status(201).send({
       status: 201,
@@ -72,4 +87,4 @@ const enrollVoice = async (req, res) => {
   }
 };
 
-export { enrollVoice };
+export default enrollVoice ;

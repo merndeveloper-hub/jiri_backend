@@ -23,6 +23,7 @@ const presignSchema = Joi.object({
 
 const createPresignedUrls = async (req, res) => {
   try {
+    const {id} = req.params
     const { error } = presignSchema.validate(req.body);
     if (error) {
       return res.status(400).send({
@@ -35,7 +36,7 @@ const createPresignedUrls = async (req, res) => {
     const urls = [];
     
     for (const file of files) {
-      const key = `${purpose}/${req.firebaseUid}/${Date.now()}_${file.name}`;
+      const key = `${purpose}/${id}/${Date.now()}_${file.name}`;
       
       const params = {
         Bucket: process.env.AWS_S3_BUCKET,

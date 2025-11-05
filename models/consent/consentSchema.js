@@ -7,14 +7,14 @@ const consentSchema = new mongoose.Schema(
   {
     firebaseUid: {
       type: SchemaType.TypeString,
-     // required: true,
+      // required: true,
       index: true,
     },
-      userId: {
-          type: SchemaType.ObjectID,
-          ref: "User",
-          required: true,
-        },
+    userId: {
+      type: SchemaType.ObjectID,
+      ref: "User",
+      required: true,
+    },
     consentKey: {
       type: SchemaType.TypeString,
       required: true,

@@ -1,8 +1,8 @@
-import { getDataWithLimit,find } from "../../helpers/index.js";
+import { getDataWithLimit, find } from "../../helpers/index.js";
 
 const getLibrary = async (req, res) => {
   try {
-    const { categories, age, duration, mood, search, isPro } = req.query;
+    const { categories, age, duration, mood, search, isPro, status, tonightPic } = req.query;
     
     const query = {};
     if (categories) query.categories = categories;
@@ -11,6 +11,8 @@ const getLibrary = async (req, res) => {
     if (mood) query.mood = mood;
     if (search) query.title = { $regex: search, $options: 'i' };
     if (isPro !== undefined) query.isPro = isPro === 'true';
+    if (status) query.status = status;
+    if (tonightPic !== undefined) query.tonightPic = tonightPic === 'true';
     
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 20;
@@ -37,17 +39,30 @@ const getLibrary = async (req, res) => {
         id: s.storyId || s._id,
         title: s.title,
         description: s.description,
+        status: s.status,
+        is_mock: s.is_mock,
         categories: s.categories,
         ageGroup: s.ageGroup,
+        age_min: s.age_min,
+        age_max: s.age_max,
         duration: s.duration,
+        duration_s: s.duration_s,
         durationMin: s.durationMin,
         mood: s.mood,
+        textContent: s.textContent,
+        audioLinks: s.audioLinks,
+        assets: s.assets,
+        languages: s.languages,
         isPro: s.isPro,
+        tonightPic: s.tonightPic,
         thumbnailUrl: s.thumbnailUrl,
-        audioLinks: s.audioLinks
+        image_url: s.image_url,
+        audio_url: s.audio_url,
+        createdAt: s.createdAt,
+        updatedAt: s.updatedAt
       })),
       page,
-     // pageSize,
+      pageSize,
       total,
       totalPages: Math.ceil(total / pageSize)
     });
