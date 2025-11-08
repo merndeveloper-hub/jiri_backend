@@ -133,3 +133,28 @@ const prepareStory = async (req, res) => {
 };
 
 export default prepareStory;
+
+// const OpenAI = require('openai');
+
+// const openai = new OpenAI({
+//   apiKey: process.env.OPENAI_API_KEY
+// });
+
+// app.post('/api/generate-story', async (req, res) => {
+//   const { childName, favouriteAnimal, storyTheme } = req.body;
+  
+//   const completion = await openai.chat.completions.create({
+//     model: "gpt-4",
+//     messages: [{
+//       role: "user",
+//       content: `Write a bedtime story for ${childName} about ${favouriteAnimal} with theme: ${storyTheme}`
+//     }]
+//   });
+
+//   res.json({
+//     success: true,
+//     story: {
+//       content: completion.choices[0].message.content
+//     }
+//   });
+// });
