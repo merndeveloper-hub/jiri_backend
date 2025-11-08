@@ -67,9 +67,16 @@ const userSchema = new mongoose.Schema(
         type: SchemaType.TypeDate,
       }
     },
-    voiceId: {
-      type: SchemaType.TypeString,
-    },
+    // voiceProfileId: {
+    //   type: SchemaType.ObjectID,
+    //   ref:"voiceProfile"
+    // },
+     voiceProfileId: [
+      {
+        type: SchemaType.ObjectID,
+      ref:"voiceProfile"
+      },
+    ],
     favorites: [
       {
         type: SchemaType.TypeString,

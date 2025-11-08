@@ -2,15 +2,15 @@
 // VOICE CLONING APIs - DELETE /runtime/voices/:id
 // ============================================
 
-import axios from "axios";
-import { updateDocument, findOneAndSelect } from "../../helpers/index.js";
+
+import { updateDocument, findOneAndSelect, deleteDocument } from "../../helpers/index.js";
 
 const deleteVoice = async (req, res) => {
   try {
-    const RUNTIME_API_URL = process.env.RUNTIME_API_URL || 'https://runtime-api.lunebi.com';
+   // const RUNTIME_API_URL = process.env.RUNTIME_API_URL || 'https://runtime-api.lunebi.com';
     const { id, voiceId } = req.params
     const voiceProfile = await findOneAndSelect("voiceProfile", {
-      voiceId: voiceId,
+      _id: voiceId,
       userId: id
     });
 
@@ -21,26 +21,31 @@ const deleteVoice = async (req, res) => {
       });
     }
 
-    await axios.delete(`${RUNTIME_API_URL}/runtime/voices/${voiceId}`, {
-      headers: { 'Authorization': req.headers.authorization }
-    });
+    // await axios.delete(`${RUNTIME_API_URL}/runtime/voices/${voiceId}`, {
+    //   headers: { 'Authorization': req.headers.authorization }
+    // });
 
-    await updateDocument("voiceProfile", {
-      voiceId: voiceId,
+    await deleteDocument("voiceProfile", {
+     _id: voiceId,
       userId: id
-    }, { status: "deleted" })
+    })
 
     // voiceProfile.status = 'deleted';
     // await voiceProfile.save();
 
-    await updateDocument("user", {
+  await updateDocument(
+  "user",
+  { _id: id },
+  { $pull: { voiceProfileId: voiceId  } }
+);
 
-      _id: id
-    }, { voiceId: null })
     // req.user.voiceId = null;
     // await req.user.save();
-
-    return res.status(204).send();
+ return res.status(200).send({
+      status: 200,
+    
+    });
+   // return res.status(204).send();
   } catch (error) {
     console.error("Error deleting voice:", error);
     return res.status(400).send({

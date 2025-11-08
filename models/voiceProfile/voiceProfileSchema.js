@@ -17,7 +17,7 @@ const voiceProfileSchema = new mongoose.Schema(
     },
     voiceId: {
       type: SchemaType.TypeString,
-      required: true,
+   //   required: true,
     },
     name: {
       type: SchemaType.TypeString,
@@ -25,12 +25,15 @@ const voiceProfileSchema = new mongoose.Schema(
     },
     status: {
       type: SchemaType.TypeString,
-      enum: ["training", "ready", "failed", "deleted"],
+    //  enum: ["training", "ready", "failed", "deleted"],
       default: "training",
     },
     modelPath: {
       type: SchemaType.TypeString,
     },
+    audioUrl:{
+        type: SchemaType.TypeString,
+      },
     sampleUrls: [
       {
         type: SchemaType.TypeString,

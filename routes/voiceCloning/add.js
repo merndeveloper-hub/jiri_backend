@@ -1,90 +1,161 @@
 // ============================================
-// VOICE CLONING APIs - POST /runtime/voices/enroll
+// VOICE UPLOAD API - POST /api/voices/:id/upload
 // ============================================
 
 import Joi from "joi";
-import { findOne, insertNewDocument } from "../../helpers/index.js";
-import axios from "axios";
+import { findOne, insertNewDocument, updateDocument } from "../../helpers/index.js";
+import multer from "multer";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { v4 as uuidv4 } from "uuid";
+import path from "path";
 
-const voiceEnrollSchema = Joi.object({
-  sampleUrls: Joi.array().items(Joi.string()).required(),
-  name: Joi.string().default('My Voice'),
-  language: Joi.string().default('cs'),
+// ============================================
+// AWS S3 Configuration
+// ============================================
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION || "us-east-1",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
 });
 
-const enrollVoice = async (req, res) => {
+const BUCKET_NAME = process.env.AWS_S3_BUCKET || "lunebi-voice-samples";
+
+// ============================================
+// Multer Configuration (Single File)
+// ============================================
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ["audio/mpeg", "audio/mp3", "audio/wav", "audio/m4a", "audio/mp4", "audio/webm"];
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Invalid file type. Only audio files are allowed."));
+    }
+  },
+}).single("audio"); // Single file with field name "audio"
+
+// ============================================
+// Upload Single File to S3
+// ============================================
+const uploadToS3 = async (file, userId) => {
+  const fileExtension = path.extname(file.originalname);
+  const fileName = `voice-samples/${userId}/${uuidv4()}${fileExtension}`;
+
+  const params = {
+    Bucket: BUCKET_NAME,
+    Key: fileName,
+    Body: file.buffer,
+    ContentType: file.mimetype,
+  };
+
   try {
-    const RUNTIME_API_URL = process.env.RUNTIME_API_URL || 'https://runtime-api.lunebi.com';
-    await voiceEnrollSchema.validateAsync(req.body);
-    const {id} = req.params
-    const { sampleUrls, name = 'My Voice', language = 'cs' } = req.body;
+    const command = new PutObjectCommand(params);
+    await s3Client.send(command);
+
+    // Return the S3 URL
+    const fileUrl = `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
+    return fileUrl;
+  } catch (error) {
+    console.error("S3 Upload Error:", error);
+    throw new Error("Failed to upload file to S3");
+  }
+};
+
+// ============================================
+// Validation Schema
+// ============================================
+const voiceUploadSchema = Joi.object({
+  name: Joi.string().default("My Voice"),
+  language: Joi.string().default("cs"),
+});
+
+// ============================================
+// Main API: Upload Single Audio to S3
+// POST /api/voices/:id/upload
+// ============================================
+const uploadVoice = async (req, res) => {
+  try {
+    // Validate body
+    await voiceUploadSchema.validateAsync(req.body);
     
-    const findVoice = await findOne("user",{_id:id})
-    if (findVoice.voiceId) {
+    const { id } = req.params;
+    const { name = "My Voice", language = "cs" } = req.body;
+
+    // Check if audio file exists
+    if (!req.file) {
       return res.status(400).send({
         status: 400,
-        message: 'User already has a voice profile'
+        message: "No audio file provided. Please upload an audio file.",
       });
     }
-    
-    const consent = await insertNewDocument("consent", {
-   //   firebaseUid: req.firebaseUid,
-    userId: id,
-      consentKey: 'voice_clone#1.0',
-      type: 'voice_clone',
-      version: '1.0',
-      jurisdiction: 'EU',
-      ip: req.ip,
-      userAgent: req.headers['user-agent']
-    });
-    
-    // is mein voice ai ke pass jati hain generator hone
-    const response = await axios.post(`${RUNTIME_API_URL}/runtime/voices/enroll`, {
-      userId: id,
-      sampleUrls,
-      name,
-      language
-    }, {
-      headers: { 'Authorization': req.headers.authorization }
-    });
-    
-    const voiceData = response?.data;
-    
+
+    // Check if user exists
+    const findUser = await findOne("user", { _id: id });
+    if (!findUser) {
+      return res.status(404).send({
+        status: 404,
+        message: "User not found",
+      });
+    }
+
+    // Upload single file to S3
+    const audioUrl = await uploadToS3(req.file, id);
+
+    // Create voice profile record
     const voiceProfile = await insertNewDocument("voiceProfile", {
       userId: id,
-    //  firebaseUid: req.firebaseUid,
-      voiceId: voiceData?.voiceId,
       name,
-      status: 'training',
-      sampleUrls
-    });
-    
-      const addVoice = await insertNewDocument("user", {
-      userId: id,
-    //  firebaseUid: req.firebaseUid,
-      voiceId: voiceData?.voiceId,
-     
+      language,
+      status: "uploaded",
+      audioUrl,
+      uploadedAt: new Date(),
     });
 
-    // req.user.voiceId = voiceData.voiceId;
-    // await req.user.save();
-    
+    // Update user with voice profile info
+  await updateDocument("user", { _id: id }, {
+  $set: { hasVoiceProfile: true },
+  $addToSet: { voiceProfileId: voiceProfile._id }
+});
+
+
     return res.status(201).send({
       status: 201,
+      message: "Voice uploaded successfully",
       voice: {
-        id: voiceData.voiceId,
+        id: voiceProfile._id,
         name,
-        status: 'training'
+        language,
+        status: "uploaded",
       },
-      job: voiceData.job
+      audioUrl,
+      uploadedAt: new Date(),
     });
   } catch (error) {
-    console.error("Error enrolling voice:", error);
-    return res.status(400).send({ 
-      status: 400, 
-      message: error.message || "An unexpected error occurred."
+    console.error("Error uploading voice:", error);
+    
+    // Handle Joi validation errors
+    if (error.isJoi) {
+      return res.status(400).send({
+        status: 400,
+        message: error.details[0].message,
+      });
+    }
+
+    return res.status(500).send({
+      status: 500,
+      message: error.message || "An unexpected error occurred.",
     });
   }
 };
 
-export default enrollVoice ;
+// ============================================
+// Export
+// ============================================
+export { uploadVoice, upload };
