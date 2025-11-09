@@ -28,7 +28,7 @@ const schema = Joi.object({
     }),
   magicLink: Joi.boolean(),
   isMedia: Joi.boolean(),
-   //password: Joi.string().required(),
+  //password: Joi.string().required(),
 
   //   .required()
   //   .messages({
@@ -89,9 +89,9 @@ const userSignup = async (req, res) => {
     // if (deleteEmailExist) {
     //   await deleteDocument("user", { email });
     // }
-
-   // const emailExist = await findOneAndSelect("user", { email});
-    const user = await findOneAndSelect("user", {
+    let user
+    // const emailExist = await findOneAndSelect("user", { email});
+    user = await findOneAndSelect("user", {
       email,
       // userType,
       // status: "Active",
@@ -105,21 +105,22 @@ const userSignup = async (req, res) => {
       }
       const passwordIsValid = bcrypt.compareSync(password, user?.password);
       if (!passwordIsValid) {
-       
-          return res
-            .status(400)
-            .send({ status: 400, message: "Invalid Email or Password!" });
-        }
+
+        return res
+          .status(400)
+          .send({ status: 400, message: "Invalid Email or Password!" });
       }
+    }
     if (!user) {
       req.body.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-    const user = await insertNewDocument("user", {
-   
-      email,
-      password:req.body.password
-    
-   
-    });    }
+      user = await insertNewDocument("user", {
+
+        email,
+        password: req.body.password
+
+
+      });
+    }
     // const mobileExist = await findOneAndSelect("user", { mobile, status: "Active" });
     // if (mobileExist) {
     //   return res
@@ -147,89 +148,89 @@ const userSignup = async (req, res) => {
     //   },
     // ]);
     // const user = await findOne("user", {
-   
+
     //   email,
-    
-   
+
+
     // });
 
 
 
-  var token = jwt.sign({ id: user._id, role: user }, ACCESS_TOKEN_SECRET, {
-             expiresIn: JWT_EXPIRES_IN,
-           });
-           var refresh_token = jwt.sign({ id: user._id, role: user }, REFRESH_TOKEN_SECRET, {
-             expiresIn: JWT_EXPIRES_IN_REFRESH_TOKEN,
-           });
- 
-  const inserttoken = await insertNewDocument("token", {
-         user_id: user._id,
-         accessToken: token,
-         refreshToken: refresh_token,
-         type: "refresh",
-       });
- 
-             // Set Access Token in Cookie
-       res.cookie("token", token, {
-         httpOnly: true,
-         secure: process.env.NODE_ENV === "production" ? true : false, // sirf prod me https
-         sameSite: "none",
-         maxAge: 1000 * 60 * 60 * 24 // 1 day (ya JWT_EXPIRES_IN ke hisaab se)
-       });
- 
-       // Set Refresh Token in Cookie (optional)
-       res.cookie("refreshToken", refresh_token, {
-         httpOnly: true,
-         secure: process.env.NODE_ENV === "production" ? true : false,
-         sameSite: "none",
-         maxAge: 1000 * 60 * 60 * 24 * 7 // 7 din
-       });
- 
+    var token = jwt.sign({ id: user._id, role: user }, ACCESS_TOKEN_SECRET, {
+      expiresIn: JWT_EXPIRES_IN,
+    });
+    var refresh_token = jwt.sign({ id: user._id, role: user }, REFRESH_TOKEN_SECRET, {
+      expiresIn: JWT_EXPIRES_IN_REFRESH_TOKEN,
+    });
+
+    const inserttoken = await insertNewDocument("token", {
+      user_id: user._id,
+      accessToken: token,
+      refreshToken: refresh_token,
+      type: "refresh",
+    });
+
+    // Set Access Token in Cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false, // sirf prod me https
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24 // 1 day (ya JWT_EXPIRES_IN ke hisaab se)
+    });
+
+    // Set Refresh Token in Cookie (optional)
+    res.cookie("refreshToken", refresh_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24 * 7 // 7 din
+    });
+
     req.userId = user._id;
-if(magicLink){
-  console.log("1");
-  
- await magicLinkSend({ email })
-  // await session.commitTransaction();
-  // session.endSession();
-  return res.json({
-    status: 200,
-    message: "Magic Link sent to your email. Check inbox to proceed.",
-    data: {
-       user,
-     //  token, refresh_token
-    },
-  });
-}else if(isMedia){
- return res.json({
-    status: 200,
-   // message: "Magic Link sent to your email. Check inbox to proceed.",
-    data: {
-       user,
-     //  token, refresh_token
-    },
-  });
-}
+    if (magicLink) {
+      console.log("1");
 
-else {
+      await magicLinkSend({ email })
+      // await session.commitTransaction();
+      // session.endSession();
+      return res.json({
+        status: 200,
+        message: "Magic Link sent to your email. Check inbox to proceed.",
+        data: {
+          user,
+          //  token, refresh_token
+        },
+      });
+    } else if (isMedia) {
+      return res.json({
+        status: 200,
+        // message: "Magic Link sent to your email. Check inbox to proceed.",
+        data: {
+          user,
+          //  token, refresh_token
+        },
+      });
+    }
 
-  await sendOTPSignup({ email })
-  // await session.commitTransaction();
-  // session.endSession();
-  return res.json({
-    status: 200,
-    message: "OTP sent to your email. Check inbox to proceed.",
-    data: {
-       user,
-     //  token, refresh_token
-    },
-  });
-}
+    else {
+
+      await sendOTPSignup({ email })
+      // await session.commitTransaction();
+      // session.endSession();
+      return res.json({
+        status: 200,
+        message: "OTP sent to your email. Check inbox to proceed.",
+        data: {
+          user,
+          //  token, refresh_token
+        },
+      });
+    }
 
     //   return res.status(200).send({ status: 200, data:{user, token} });
   } catch (error) {
- //  await session.abortTransaction();
-   // session.endSession();
+    //  await session.abortTransaction();
+    // session.endSession();
     if (error.code === 11000) {
       // Duplicate key error
       return res.status(400).send({

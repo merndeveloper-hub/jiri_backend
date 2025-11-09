@@ -104,7 +104,12 @@ const uploadVoice = async (req, res) => {
         message: "User not found",
       });
     }
-
+  // Check if user already has a voice
+    if (findUser.voiceProfileId[0]) {
+      return res.status(400).json({
+        error: { code: 'VOICE_EXISTS', message: 'User already has a voice profile' }
+      });
+    }
     // Upload single file to S3
     const audioUrl = await uploadToS3(req.file, id);
 

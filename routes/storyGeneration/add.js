@@ -54,7 +54,8 @@ const prepareStory = async (req, res) => {
     await prepareStorySchema.validateAsync(req.body);
     const { id } = req.params
 
-    const { storyId, voiceType = 'preset', voiceId } = req.body;
+   // const { storyId, voiceType = 'preset', voiceId } = req.body;
+    const { childName, favouriteAnimal, storyTheme } = req.body;
     const user = id;
 
     const limitCheck = await checkPlayLimit(user, voiceType);
@@ -65,9 +66,20 @@ const prepareStory = async (req, res) => {
       });
     }
 
+
+ let addStory =  await insertNewDocument("story", {
+      userId: id,
+      userType:"user",
+      // firebaseUid: req.firebaseUid,
+      childName, favouriteAnimal, storyTheme,
+    //  voiceType,
+      monthKey: new Date().toISOString().slice(0, 7)
+    });
+
+
     const cachedAudio = await findOne("audioCache", {
       userId: id,
-      storyId,
+      storyId:addStory._id,
       voiceType,
       expiresAt: { $gt: new Date() }
     });
@@ -83,21 +95,21 @@ const prepareStory = async (req, res) => {
       });
     }
 
-    const response = await axios.post(`${RUNTIME_API_URL}/runtime/stories/prepare`, {
-      storyId,
-      userId: id,
-      voiceType,
-      voiceId: voiceType === 'cloned' ? voiceId : undefined
-    }, {
-      headers: { 'Authorization': req.headers.authorization }
-    });
+    // const response = await axios.post(`${RUNTIME_API_URL}/runtime/stories/prepare`, {
+    //   storyId,
+    //   userId: id,
+    //   voiceType,
+    //   voiceId: voiceType === 'cloned' ? voiceId : undefined
+    // }, {
+    //   headers: { 'Authorization': req.headers.authorization }
+    // });
 
-    const jobData = response.data;
+   // const jobData = response.data;
 
     await insertNewDocument("play", {
       userId: id,
       // firebaseUid: req.firebaseUid,
-      storyId,
+     storyId:addStory._id,
       voiceType,
       monthKey: new Date().toISOString().slice(0, 7)
     });
@@ -117,11 +129,11 @@ const prepareStory = async (req, res) => {
 
     return res.status(200).send({
       status: 200,
-      job: {
-        jobId: jobData.jobId,
-        status: 'processing',
-        etaSeconds: jobData.etaSeconds
-      }
+      // job: {
+      //   jobId: jobData.jobId,
+      //   status: 'processing',
+      //   etaSeconds: jobData.etaSeconds
+      // }
     });
   } catch (error) {
     console.error("Error preparing story:", error);
