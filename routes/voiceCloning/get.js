@@ -1,7 +1,7 @@
 // ============================================
 // GET /app/favorites - Get user's favorite stories
 // ============================================
-import { findOne, find } from "../../helpers/index.js";
+import { findOne, findAndSort } from "../../helpers/index.js";
 
 const getVoices = async (req, res) => {
   try {
@@ -20,7 +20,7 @@ const getVoices = async (req, res) => {
     console.log(user, "users");
 
     // ✅ Get story IDs from favorites array
-  const getVoice = await find("voiceProfile", { userId: id });
+const getVoice = await findAndSort("voiceProfile", { userId: id },{ createdAt: -1 })
 
     return res.status(200).send({
       status: 200,

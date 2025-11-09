@@ -8,7 +8,7 @@ import {
 } from "../../../helpers/index.js";
 import { JWT_EXPIRES_IN, JWT_EXPIRES_IN_REFRESH_TOKEN, REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } from "../../../config/index.js";
 import jwt from "jsonwebtoken";
-//import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 //import mongoose from "mongoose";
 import sendOTPSignup from "../otpVerification/sendOTPSignup.js";
 
@@ -27,6 +27,8 @@ const schema = Joi.object({
       "string.pattern.base": "Invalid email structure",
     }),
   magicLink: Joi.boolean(),
+  isMedia: Joi.boolean(),
+   //password: Joi.string().required(),
 
   //   .required()
   //   .messages({
@@ -34,17 +36,17 @@ const schema = Joi.object({
   //       "Mobile number must be digits.",
   //     "any.required": "Mobile number is required.",
   //   }),
-  // password: Joi.string()
-  //   .pattern(
-  //     new RegExp(
-  //       "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,30}$"
-  //     )
-  //   )
-  //   .required()
-  //   .messages({
-  //     "string.pattern.base":
-  //       "Password must be 8-30 characters, including uppercase, lowercase, number & special character.",
-  //   }),
+  password: Joi.string()
+    .pattern(
+      new RegExp(
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,30}$"
+      )
+    )
+    .required()
+    .messages({
+      "string.pattern.base":
+        "Password must be 8-30 characters, including uppercase, lowercase, number & special character.",
+    }),
   // confirm_password: Joi.string().required().valid(Joi.ref("password")),
   // status: Joi.string(),
   // userType: Joi.string().required(),
@@ -75,6 +77,7 @@ const userSignup = async (req, res) => {
       password,
       magicLink,
       email,
+      isMedia,
       mobile,
       status,
       userType,
@@ -89,9 +92,11 @@ const userSignup = async (req, res) => {
 
     const emailExist = await findOneAndSelect("user", { email});
     if (!emailExist) {
+      req.body.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     const user = await insertNewDocument("user", {
    
       email,
+      password:req.body.password
     
    
     });    }
@@ -109,7 +114,6 @@ const userSignup = async (req, res) => {
     //     .send({ status: 401, message: "No User Type Found" });
     // }
 
-   // req.body.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
     // const userCount = await getAggregate("user", [
     //   {
@@ -176,7 +180,18 @@ if(magicLink){
      //  token, refresh_token
     },
   });
-}else {
+}else if(isMedia){
+ return res.json({
+    status: 200,
+   // message: "Magic Link sent to your email. Check inbox to proceed.",
+    data: {
+       user,
+     //  token, refresh_token
+    },
+  });
+}
+
+else {
 
   await sendOTPSignup({ email })
   // await session.commitTransaction();

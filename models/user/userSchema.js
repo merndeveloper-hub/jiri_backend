@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema(
     firebaseUid: {
       type: SchemaType.TypeString,
     },
+     password: {
+      type: SchemaType.TypeString,
+    },
     email: {
       type: SchemaType.TypeString,
       required: true,
@@ -14,6 +17,7 @@ const userSchema = new mongoose.Schema(
     //  lowercase: true,
      // trim: true
     },
+  
     name: {
       type: SchemaType.TypeString,
       trim: true
