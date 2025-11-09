@@ -90,8 +90,28 @@ const userSignup = async (req, res) => {
     //   await deleteDocument("user", { email });
     // }
 
-    const emailExist = await findOneAndSelect("user", { email});
-    if (!emailExist) {
+   // const emailExist = await findOneAndSelect("user", { email});
+    const user = await findOneAndSelect("user", {
+      email,
+      // userType,
+      // status: "Active",
+    });
+
+    if (user) {
+      if (!user?.password) {
+        return res
+          .status(400)
+          .send({ status: 400, message: "No Password found" });
+      }
+      const passwordIsValid = bcrypt.compareSync(password, user?.password);
+      if (!passwordIsValid) {
+       
+          return res
+            .status(400)
+            .send({ status: 400, message: "Invalid Email or Password!" });
+        }
+      }
+    if (!user) {
       req.body.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     const user = await insertNewDocument("user", {
    
@@ -126,14 +146,14 @@ const userSignup = async (req, res) => {
     //     },
     //   },
     // ]);
-    const user = await findOne("user", {
+    // const user = await findOne("user", {
    
-      email,
+    //   email,
     
    
-    });
+    // });
 
-    // console.log(user, "user");
+
 
   var token = jwt.sign({ id: user._id, role: user }, ACCESS_TOKEN_SECRET, {
              expiresIn: JWT_EXPIRES_IN,
