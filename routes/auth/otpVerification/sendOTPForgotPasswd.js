@@ -24,14 +24,14 @@ const sendOTPForgotPasswd = async (req, res) => {
   
     const user = await findOne("user", { email});
 
-    console.log(user, "user");
+   
 
     if (!user || user.length == 0) {
       return res.status(401).send({ status: 401, message: "No account found with this email address" });
     }
 
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-    console.log(otp, "otp--------------------");
+  
 
  
 
@@ -39,7 +39,7 @@ const sendOTPForgotPasswd = async (req, res) => {
     const saltRounds = 10;
 
     const hashedOTP = await bcrypt.hash(otp, saltRounds);
-    console.log(hashedOTP, "hashedOTP");
+   
 
     const otpRes = await insertNewDocument("userOTP", {
       userEmail: email,

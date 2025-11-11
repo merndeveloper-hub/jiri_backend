@@ -71,7 +71,7 @@ const forgotPaasswd = async (req, res) => {
 
     req.body.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
-    console.log(req.body.password, "req.body.password");
+ 
 
 
     const user_passwd_updated = await updateDocument(
@@ -80,7 +80,7 @@ const forgotPaasswd = async (req, res) => {
       { password: req.body.password }
 
     );
-    console.log(user_passwd_updated, "user_passwd_updated");
+   
 
     await session.commitTransaction();
     session.endSession();

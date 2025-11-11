@@ -14,7 +14,7 @@ const getUsage = async (req, res) => {
     const id = req.params.id;
     const currentMonth = new Date().toISOString().slice(0, 7);
 
-    // ✅ Validate user ID format
+    //  Validate user ID format
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).send({
         status: 400,
@@ -22,7 +22,7 @@ const getUsage = async (req, res) => {
       });
     }
 
-    // ✅ Get user details
+    //  Get user details
     const user = await findOne("user", { _id: id });
 
     if (!user) {
@@ -32,7 +32,7 @@ const getUsage = async (req, res) => {
       });
     }
 
-    // ✅ Reset monthly limits if new month
+    //  Reset monthly limits if new month
     if (user.limits.month_key !== currentMonth) {
       user.limits.free_plays_used_month = 0;
       user.limits.cloned_plays_used_month = 0;
@@ -46,7 +46,7 @@ const getUsage = async (req, res) => {
       });
     }
 
-    // ✅ Aggregate plays by voice type for current month
+    //  Aggregate plays by voice type for current month
     const plays = await getAggregate("play", [
       {
         $match: {
@@ -69,13 +69,13 @@ const getUsage = async (req, res) => {
       }
     ]);
 
-    // ✅ Format plays by type
+    //  Format plays by type
     const playsByType = {};
     plays.forEach(p => {
       playsByType[p.voiceType] = p.count;
     });
 
-    // ✅ Define plan-based limits
+    //  Define plan-based limits
     const planLimits = {
       free: {
         clonedPlaysLimit: 0,
@@ -93,7 +93,7 @@ const getUsage = async (req, res) => {
 
     const currentPlanLimits = planLimits[user.plan] || planLimits.free;
 
-    // ✅ Calculate totals
+    //  Calculate totals
     const presetPlays = playsByType.preset || 0;
     const clonedPlays = playsByType.cloned || 0;
     const totalPlays = presetPlays + clonedPlays;

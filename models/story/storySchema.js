@@ -6,37 +6,27 @@ const storySchema = new mongoose.Schema(
   {
     storyId: {
       type: SchemaType.TypeString,
-      required: true,
-      //unique: true,
-      // index: true,
+ 
     },
     childName: {
       type: SchemaType.TypeString,
-     // required: true,
-      //unique: true,
-      // index: true,
+    
     },
     userType: {
       type: SchemaType.TypeString,
-     // required: true,
-      //unique: true,
-      // index: true,
+    
     },
     favouriteAnimal: {
       type: SchemaType.TypeString,
-     // required: true,
-      //unique: true,
-      // index: true,
+    
     },
     storyTheme: {
       type: SchemaType.TypeString,
-     // required: true,
-      //unique: true,
-      // index: true,
+    
     },
     title: {
       type: SchemaType.TypeString,
-      required: true,
+   
     },
     description: {
       type: SchemaType.TypeString,

@@ -11,7 +11,7 @@ const router = express.Router();
 router.get("/getFacets",  getFacets);
 
 //----------get story with filter --------------------//
-router.get("/get",  getLibrary);
+router.get("/get/:id",  getLibrary);
 
 //----------get single story by id--------------------//
 router.get("/:id",  getStoryById);

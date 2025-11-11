@@ -57,14 +57,14 @@ const verifyOTP = async (req, res) => {
       
         } else {
           const validOTP = await bcrypt.compare(otp, hashedOTP);
-          console.log(validOTP,"validotp------------------");
+       
           
           if (!validOTP) {
             // supplied otp is wrong
             return res.status(400).send({ status: 400, message: "The OTP you entered is invalid. Please check your inbox and try again." });
           } else {
             // success
-            console.log("1");
+         
             
 
    const user = await findOne("user", {
@@ -108,9 +108,9 @@ const verifyOTP = async (req, res) => {
 
           //  await updateDocument("user", { email: userEmail });
             //  await UserOTPVerification.deleteMany({ userId });
-                console.log("2");
+              
             await deleteManyDocument("userOTP", { userEmail });
-          console.log("3");
+    
             res.status(200).json({
               status: 200,
               message: "OTP verified successfully.",

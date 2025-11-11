@@ -1,104 +1,421 @@
-{"level":"info","time":"2025-11-09T12:39:37.671Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:39:37.672Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:40:29.068Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:40:29.069Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:40:32.449Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:40:32.450Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:40:47.147Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:40:47.149Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:40:52.958Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:40:52.959Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:41:01.449Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:41:01.450Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:41:40.005Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:41:40.007Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:42:09.114Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:42:09.115Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:42:14.586Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:42:14.587Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:42:48.873Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:42:48.875Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:45:29.457Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:45:29.458Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:45:36.377Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:45:36.379Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:46:22.829Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:46:22.829Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:51:05.929Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:51:05.930Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:52:22.249Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:52:22.250Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:52:41.988Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:52:41.990Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:52:46.833Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T12:52:46.834Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:41:57.141Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:41:57.143Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:42:03.676Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:42:03.677Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"error","time":"2025-11-09T13:43:01.049Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: queryTxt ETIMEOUT cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
-{"level":"info","time":"2025-11-09T13:53:07.438Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:53:07.439Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"error","time":"2025-11-09T13:53:54.871Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: queryTxt ETIMEOUT cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
-{"level":"info","time":"2025-11-09T13:54:14.433Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:54:14.435Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"error","time":"2025-11-09T13:54:58.750Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: queryTxt ETIMEOUT cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
-{"level":"info","time":"2025-11-09T13:56:13.075Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:56:13.076Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:57:20.133Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:57:20.134Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:57:30.185Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:57:30.186Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:57:45.523Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:57:45.524Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:57:58.583Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:57:58.584Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:00.880Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:00.881Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:06.407Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:06.408Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:27.649Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:27.649Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:30.663Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:30.664Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:44.054Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:44.056Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:46.085Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:58:46.086Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:59:06.217Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:59:06.218Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:59:09.475Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T13:59:09.476Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"error","time":"2025-11-09T13:59:58.789Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: queryTxt ETIMEOUT cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
-{"level":"info","time":"2025-11-09T14:01:29.602Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:01:29.603Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:01:34.708Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:01:34.708Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:01:44.087Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:01:44.089Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:01:52.470Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:01:52.471Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:02:06.425Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:02:06.426Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:02:24.138Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:02:24.139Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:02:49.745Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:02:49.746Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:02:52.146Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:02:52.147Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:02:56.242Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:02:56.243Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:03:15.823Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:03:15.825Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:03:23.872Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:03:23.873Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"error","time":"2025-11-09T14:04:06.184Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: queryTxt ETIMEOUT cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
-{"level":"info","time":"2025-11-09T14:09:39.246Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:09:39.247Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:09:47.786Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:09:47.787Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"error","time":"2025-11-09T14:10:41.098Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: queryTxt ETIMEOUT cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
-{"level":"info","time":"2025-11-09T14:16:14.681Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:16:14.682Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:16:29.808Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
-{"level":"info","time":"2025-11-09T14:16:29.809Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:31:41.067Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:31:41.068Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:31:41.075Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:32:25.227Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:32:25.228Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:32:25.234Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:32:28.799Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:32:28.800Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:32:28.806Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:32:30.392Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:32:30.393Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:32:30.398Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:32:35.769Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:32:35.769Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:32:35.773Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:32:37.703Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:32:37.704Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:32:37.708Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:32:39.450Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:32:39.451Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:32:39.456Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:32:53.100Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:32:53.102Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:32:53.116Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:33:03.060Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:33:03.060Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:33:03.066Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:33:05.675Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:33:05.676Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:33:05.682Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:33:07.962Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:33:07.963Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:33:07.970Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:33:10.289Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:33:10.290Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:33:10.295Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:33:12.426Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:33:12.427Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:33:12.433Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:33:19.630Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:33:19.631Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:33:19.638Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:33:28.404Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:33:28.405Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:33:28.410Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:33:40.277Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:33:40.278Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:33:40.284Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:33:44.841Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:33:44.842Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:33:44.846Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:33:49.995Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:33:49.999Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:33:50.013Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:37:38.873Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:37:38.874Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:37:38.879Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:37:46.910Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:37:46.911Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:37:46.916Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:37:53.638Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:37:53.639Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:37:53.644Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:37:59.348Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:37:59.349Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:37:59.356Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:38:03.609Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:03.610Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:03.615Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:38:06.782Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:06.783Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:06.787Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"MongoParseError: Username contains unescaped characters #DB_USER\n    at new ConnectionString (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongodb-connection-string-url\\lib\\index.js:106:23)\n    at parseOptions (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongodb\\lib\\connection_string.js:203:17)\n    at new MongoClient (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongodb\\lib\\mongo_client.js:51:61)\n    at NativeConnection.createClient (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongoose\\lib\\drivers\\node-mongodb-native\\connection.js:328:14)\n    at NativeConnection.openUri (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongoose\\lib\\connection.js:1069:34)\n    at Mongoose.connect (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongoose\\lib\\mongoose.js:446:15)\n    at file:///D:/jiri_backend_code/jiri_backend/config/db/index.js:9:10\n    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:691:26)"}
+{"level":"info","time":"2025-11-09T16:38:09.435Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:09.436Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:09.439Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"MongoParseError: URI contained empty userinfo section\n    at new ConnectionString (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongodb-connection-string-url\\lib\\index.js:111:27)\n    at parseOptions (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongodb\\lib\\connection_string.js:203:17)\n    at new MongoClient (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongodb\\lib\\mongo_client.js:51:61)\n    at NativeConnection.createClient (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongoose\\lib\\drivers\\node-mongodb-native\\connection.js:328:14)\n    at NativeConnection.openUri (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongoose\\lib\\connection.js:1069:34)\n    at Mongoose.connect (D:\\jiri_backend_code\\jiri_backend\\node_modules\\mongoose\\lib\\mongoose.js:446:15)\n    at file:///D:/jiri_backend_code/jiri_backend/config/db/index.js:9:10\n    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:691:26)"}
+{"level":"info","time":"2025-11-09T16:38:11.909Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:11.909Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:11.914Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:38:13.964Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:13.965Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:13.969Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:38:17.952Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:17.953Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:17.962Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:38:24.216Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:24.216Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:24.222Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:38:27.012Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:27.013Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:27.019Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:38:31.327Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:31.328Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:31.335Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:38:34.480Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:34.481Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:34.487Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:38:46.282Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:46.284Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:46.293Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv EBADNAME _mongodb._tcp.$cluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:38:49.403Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:38:49.403Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:38:49.409Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:39:28.216Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:39:28.218Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:39:28.223Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:40:28.076Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:40:28.076Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:40:28.083Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:40:47.593Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:40:47.594Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:40:47.611Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:40:49.571Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:40:49.572Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:40:49.578Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:40:51.656Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:40:51.657Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:40:51.662Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:40:58.964Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:40:58.965Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:40:58.979Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:01.341Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:01.342Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:01.348Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:03.054Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:03.054Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:03.059Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:05.134Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:05.135Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:05.142Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:07.921Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:07.922Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:07.926Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:11.566Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:11.567Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:11.576Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:15.335Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:15.336Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:15.342Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:22.900Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:22.901Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:22.906Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:26.226Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:26.227Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:26.235Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:28.677Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:28.678Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:28.685Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:34.967Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:34.968Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:34.972Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:41.267Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:41.268Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:41.273Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:48.303Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:48.305Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:48.310Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:41:58.355Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:41:58.356Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:41:58.361Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:00.393Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:00.394Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:00.400Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:05.228Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:05.231Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:05.237Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:08.089Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:08.090Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:08.096Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:14.048Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:14.049Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:14.059Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:15.727Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:15.728Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:15.734Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:23.030Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:23.030Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:23.036Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:25.605Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:25.605Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:25.610Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:30.037Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:30.038Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:30.043Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:37.353Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:37.353Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:37.358Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:39.892Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:39.893Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:39.899Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:42.396Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:42.396Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:42.402Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:47.580Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:47.580Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:47.589Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:42:52.882Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:42:52.883Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:42:52.888Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:43:10.799Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:43:10.800Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:43:10.805Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:43:13.429Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:43:13.430Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:43:13.435Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:43:16.530Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:43:16.531Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:43:16.538Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:43:19.063Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:43:19.063Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:43:19.068Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:43:24.979Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:43:24.980Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:43:24.986Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:43:50.343Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:43:50.343Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:43:50.348Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:44:00.080Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:44:00.081Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:44:00.088Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:44:07.340Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:44:07.341Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:44:07.347Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:44:11.124Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:44:11.125Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:44:11.130Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:44:15.557Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:44:15.557Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:44:15.572Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:44:19.258Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:44:19.260Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:44:19.267Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:44:25.886Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:44:25.886Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:44:25.895Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:44:27.506Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:44:27.507Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:44:27.512Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:44:38.415Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:44:38.417Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:44:38.425Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:44:48.077Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:44:48.080Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:44:48.084Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:44:57.483Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:44:57.483Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:44:57.490Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:45:00.923Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:45:00.924Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:45:00.929Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:45:05.221Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:45:05.222Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:45:05.227Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:45:09.784Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:45:09.785Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:45:09.795Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:45:12.408Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:45:12.409Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:45:12.412Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:45:17.323Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:45:17.325Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:45:17.334Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:45:19.623Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:45:19.623Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:45:19.634Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:45:22.344Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:45:22.345Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:45:22.350Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:45:35.084Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:45:35.085Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:45:35.092Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:45:38.050Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:45:38.051Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:45:38.057Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:45:55.277Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:45:55.278Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:45:55.287Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:45:57.902Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:45:57.903Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:45:57.908Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:46:02.898Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:46:02.898Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:46:02.904Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:46:38.171Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:46:38.172Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:46:38.179Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:46:42.571Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:46:42.572Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:46:42.581Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:46:46.072Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:46:46.072Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:46:46.077Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:46:47.638Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:46:47.639Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:46:47.647Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:47:14.886Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:47:14.886Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:47:14.893Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:47:21.555Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:47:21.556Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:47:21.562Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:47:23.730Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:47:23.731Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:47:23.736Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:47:30.105Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:47:30.105Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:47:30.111Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T16:47:33.652Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T16:47:33.653Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"error","time":"2025-11-09T16:47:33.659Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"Error: querySrv ECONNREFUSED _mongodb._tcp.lunebicluster0.3vlsbmo.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)"}
+{"level":"info","time":"2025-11-09T17:57:44.912Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T17:57:44.914Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T17:59:21.873Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-09T17:59:21.874Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T07:57:26.058Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T07:57:26.059Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:04:18.451Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:04:18.451Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:05:27.791Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:05:27.792Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:05:40.179Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:05:40.181Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:05:54.641Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:05:54.643Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:05:56.457Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:05:56.458Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:06:46.602Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:06:46.603Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:06:53.543Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:06:53.544Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:08:34.288Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:08:34.290Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:23:30.910Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:23:30.911Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:23:40.975Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:23:40.975Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:23:46.346Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:23:46.347Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:24:05.257Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:24:05.259Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:26:09.062Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T08:26:09.062Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:19:10.691Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:19:10.691Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:23:43.573Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:23:43.574Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:39.705Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:39.705Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:44.595Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:44.595Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:49.712Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:49.712Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:51.651Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:51.651Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:53.217Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:53.217Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:56.214Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:24:56.215Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:09.096Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:09.096Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:10.523Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:10.524Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:12.074Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:12.075Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:14.113Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:14.114Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:17.010Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:17.010Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:33.844Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:33.844Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:35.639Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:35.639Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:38.212Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:38.212Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:41.355Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:41.355Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:46.753Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:46.754Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:48.471Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:48.471Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:52.504Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:52.505Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:53.900Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:53.901Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:56.012Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:56.013Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:59.442Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:25:59.442Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:08.379Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:08.380Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:14.014Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:14.015Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:23.162Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:23.162Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:26.980Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:26.980Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:28.759Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:28.759Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:31.286Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:31.287Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:34.902Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:34.902Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:36.883Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:36.884Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:38.719Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:38.720Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:48.953Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:48.954Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:50.394Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:50.394Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:53.861Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:53.862Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:56.506Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:26:56.507Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:27:01.455Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:27:01.455Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:27:04.957Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:27:04.957Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:27:06.958Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:27:06.959Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:27:08.578Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}
+{"level":"info","time":"2025-11-11T09:27:08.579Z","hostname":"DESKTOP-G9MMA3M","context":"userService","message":"HTTPS server started on "}

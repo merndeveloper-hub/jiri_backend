@@ -7,29 +7,27 @@ const subscriptionTransactionSchema = new mongoose.Schema(
     userId: {
       type: SchemaType.TypeObjectId,
       ref: "User",
-     // required: true,
-     // index: true
+    
     },
     stripeSessionId: {
       type: SchemaType.TypeString,
-     // unique: true,
-      sparse: true
+   
     },
     stripeSubscriptionId: {
       type: SchemaType.TypeString,
-     // index: true
+   
     },
     stripeCustomerId: {
       type: SchemaType.TypeString,
-      required: true
+     
     },
     priceId: {
       type: SchemaType.TypeString,
-      required: true
+      
     },
     amount: {
       type: SchemaType.TypeNumber,
-      required: true
+      
     },
     currency: {
       type: SchemaType.TypeString,
@@ -40,17 +38,17 @@ const subscriptionTransactionSchema = new mongoose.Schema(
       type: SchemaType.TypeString,
       enum: ["pending", "completed", "failed", "cancelled"],
       default: "pending",
-      index: true
+     
     },
     plan: {
       type: SchemaType.TypeString,
       enum: ["pro", "family"],
-      required: true
+     
     },
     billingCycle: {
       type: SchemaType.TypeString,
       enum: ["monthly", "yearly"],
-      required: true
+      
     },
     paymentStatus: {
       type: SchemaType.TypeString,
@@ -78,10 +76,6 @@ const subscriptionTransactionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Indexes for faster queries
-// subscriptionTransactionSchema.index({ userId: 1, createdAt: -1 });
-// subscriptionTransactionSchema.index({ stripeSessionId: 1 });
-// subscriptionTransactionSchema.index({ stripeSubscriptionId: 1 });
-// subscriptionTransactionSchema.index({ status: 1 });
+
 
 export default subscriptionTransactionSchema;

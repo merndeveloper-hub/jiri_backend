@@ -8,17 +8,12 @@ const playSchema = new mongoose.Schema(
     userId: {
       type: SchemaType.ObjectID,
       ref: "User",
-      required: true,
+      
     },
-    firebaseUid: {
-      type: SchemaType.TypeString,
-     // required: true,
-      index: true,
-    },
+    
     storyId: {
       type: SchemaType.TypeString,
-      required: true,
-      index: true,
+   
     },
     voiceType: {
       type: SchemaType.TypeString,
@@ -27,7 +22,7 @@ const playSchema = new mongoose.Schema(
     },
     monthKey: {
       type: SchemaType.TypeString,
-      index: true,
+    
     },
     timestamp: {
       type: SchemaType.TypeDate,

@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "./config/db/index.js";
 // import rateLimit from "express-rate-limit";
-// import morgan from "morgan";
+
 import cors from "cors";
 import https from "https";
 import cookieParser from "cookie-parser";
@@ -19,7 +19,7 @@ import http from "http";
 import { Server } from "socket.io";
 //import { initSocket } from './socket.js';
 //import logger from "./logger/index.js";
-//import  arcjetMiddleware  from'./middleware/arcjet/index.js';
+
 import errorMiddleware from "./middleware/error-middleware/index.js";
 
 
@@ -67,9 +67,9 @@ app.use(pinoHttpMiddleware);
 // app.use(limiter);
 
 //-----logger insert db----/////
-app.use(apiLogger); // ✅ Apply here
+app.use(apiLogger);
 //app.use(loggerMiddleware);
-//app.use(morgan("short"));
+
 //app.use(arcjetMiddleware);
 
 ///It set false to local run test,when we go prod to set true value for rate limting check//
@@ -92,20 +92,10 @@ app.use("/api/v1", routes);
 app.use(errorMiddleware);
 
 app.get("/", async (req, res) => {
-  
+
   req.log.info("Ping request received");
   return res.status(200).json({ status: 200, message: "FirstStab" });
 });
-
-
-
-
-
-
-
-
-
-
 
 
 io.on("connection", (socket) => {
@@ -126,12 +116,7 @@ console.log(PORT, "process.env.PORT ");
 
 let port = process.env.PORT | 5000;
 
-// const server = app.listen(SERVICE_PORT, function () {
-//     const port = server.address().port
-//     console.log("HTTP server started on ", port);
-//     serverlogger.info("HTTP server started on ", port);
 
-// });
 
 const serverhttps = https
   .createServer(app)
@@ -142,15 +127,15 @@ const serverhttps = https
   });
 
 server.listen(port, () => {
-  //logger.info("Server is running on port 3000");
+
   console.log(`Server is running on PORT http://localhost:${port}`);
-  //   console.log("HTTPS server started on ", port);
+
   log.info("HTTPS server started on ", port);
-  //  serverlogger.info("HTTPS server started on ", port);
+
 });
 
 const closeServer = () => {
-  // serverlogger.info("closing app");
+
 };
 
 process.on("SIGTERM", closeServer);

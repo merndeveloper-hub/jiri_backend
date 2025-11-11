@@ -7,7 +7,7 @@ import { findOne, insertNewDocument } from "../../helpers/index.js";
 import Joi from "joi";
 
 const prepareStorySchema = Joi.object({
-  storyId: Joi.string().required(),
+  storyId: Joi.string().optional(),
   voiceType: Joi.string().valid('preset', 'cloned', 'default').default('preset'),
   voiceId: Joi.string().optional(),
 });
@@ -51,12 +51,14 @@ const checkPlayLimit = async (id, voiceType) => {
 
 const prepareStory = async (req, res) => {
   try {
-    await prepareStorySchema.validateAsync(req.body);
+   // await prepareStorySchema.validateAsync(req.body);
     const { id } = req.params
 
-   // const { storyId, voiceType = 'preset', voiceId } = req.body;
     const { childName, favouriteAnimal, storyTheme } = req.body;
-    const user = id;
+ 
+    let voiceType = 'preset'
+
+let user = await findOne("user",{_id:id})
 
     const limitCheck = await checkPlayLimit(user, voiceType);
     if (!limitCheck.allowed) {
@@ -70,9 +72,9 @@ const prepareStory = async (req, res) => {
  let addStory =  await insertNewDocument("story", {
       userId: id,
       userType:"user",
-      // firebaseUid: req.firebaseUid,
+
       childName, favouriteAnimal, storyTheme,
-    //  voiceType,
+
       monthKey: new Date().toISOString().slice(0, 7)
     });
 
@@ -106,7 +108,7 @@ const prepareStory = async (req, res) => {
 
    // const jobData = response.data;
 
-    await insertNewDocument("play", {
+  let play =  await insertNewDocument("play", {
       userId: id,
       // firebaseUid: req.firebaseUid,
      storyId:addStory._id,
@@ -115,8 +117,10 @@ const prepareStory = async (req, res) => {
     });
 
     if (voiceType === 'cloned') {
-      user.limits.cloned_plays_used_month += 1;
-    }
+     // user.limits.cloned_plays_used_month += 1;
+    // limits = {
+    //   cloned_plays_used_month: findUser?.cloned_plays_used_month + 1
+    // }
     let findUser = await findOne("user", { _id: id })
 
     limits = {
@@ -125,15 +129,16 @@ const prepareStory = async (req, res) => {
     await insertNewDocument("user", {
       limits
     });
+    }
     // await user.save();
 
     return res.status(200).send({
       status: 200,
-      // job: {
-      //   jobId: jobData.jobId,
-      //   status: 'processing',
-      //   etaSeconds: jobData.etaSeconds
-      // }
+      data: {
+       addStory,
+        play,
+        cachedAudio
+      }
     });
   } catch (error) {
     console.error("Error preparing story:", error);

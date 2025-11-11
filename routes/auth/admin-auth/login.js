@@ -32,38 +32,15 @@ const schema = Joi.object({
 const adminLogin = async (req, res) => {
   const { email, password, userType } = req.body;
   try {
-    console.log(req.body, "body---");
+  
 
     await schema.validateAsync(req.body);
     const user = await findOneAndSelect(
       "user",
       { email, userType }
     );
-    // const user = await getAggregate("user", [
-    //   {
-    //     $match: {
-    //       email,
-    //     },
-    //   },
-    //   {
-    //     $lookup: {
-    //       from: "user-types",
-    //       localField: "type",
-    //       foreignField: "_id",
-    //       as: "type",
-    //     },
-    //   },
-    //   {
-    //     $unwind: "$type",
-    //   },
-    //   {
-    //     $project: {
-    //       followers: 0,
-    //       following: 0,
-    //     },
-    //   },
-    // ]);
-    console.log(user, "user----");
+    
+  
 
     if (user) {
 

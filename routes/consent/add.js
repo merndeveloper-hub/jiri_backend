@@ -23,7 +23,7 @@ const createConsent = async (req, res) => {
 
     const { type, version, jurisdiction } = req.body;
 
-    // ✅ Convert Mongoose save to insertNewDocument
+    //  Convert Mongoose save to insertNewDocument
     const consent = await insertNewDocument("consent", {
       // firebaseUid: req.firebaseUid,
       userId: id,

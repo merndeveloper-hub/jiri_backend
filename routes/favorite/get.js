@@ -7,7 +7,7 @@ const getFavorites = async (req, res) => {
   try {
     const userId = req.params.id;
 
-    // ✅ Get user
+    //  Get user
     const user = await findOne("user", { _id: userId });
 
     if (!user) {
@@ -19,7 +19,7 @@ const getFavorites = async (req, res) => {
 
     console.log(user, "users");
 
-    // ✅ Get story IDs from favorites array
+    //  Get story IDs from favorites array
     const storyIds = user.favorites || [];
 
     if (storyIds.length === 0) {
@@ -30,10 +30,10 @@ const getFavorites = async (req, res) => {
       });
     }
 
-    // ✅ Find all stories by storyId
+    //  Find all stories by storyId
     const stories = await find("story", { storyId: { $in: storyIds } });
 
-    // ✅ Format response with all fields
+    //  Format response with all fields
     const favorites = stories.map(story => ({
       id: story._id.toString(),
       storyId: story.storyId,
@@ -73,7 +73,7 @@ const getFavorites = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("❌ Error fetching favorites:", error);
+    console.error(" Error fetching favorites:", error);
     return res.status(500).send({
       status: 500,
       message: error.message || "An unexpected error occurred."

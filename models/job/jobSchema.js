@@ -7,24 +7,19 @@ const jobSchema = new mongoose.Schema(
   {
     jobId: {
       type: SchemaType.TypeString,
-      required: true,
+    
       unique: true,
-      index: true,
     },
     userId: {
       type: SchemaType.ObjectID,
       ref: "User",
-      required: true,
+    
     },
-    firebaseUid: {
-      type: SchemaType.TypeString,
-    //  required: true,
-      index: true,
-    },
+  
     type: {
       type: SchemaType.TypeString,
       enum: ["export", "delete", "voice_train", "tts_generate"],
-      required: true,
+     
     },
     status: {
       type: SchemaType.TypeString,

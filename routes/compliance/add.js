@@ -17,22 +17,22 @@ const exportUserData = async (req, res) => {
       payload: false
     });
 
-    // ✅ Get favorites (multiple documents)
+    //  Get favorites (multiple documents)
     const favorites = await find("story", {
       storyId: { $in: user.favorites }
     });
 
-    // ✅ Get consents (multiple documents)
+    //  Get consents (multiple documents)
     const consents = await find("consent", {
       userId: id
     });
 
-    // ✅ Get plays with limit (multiple documents)
+    //  Get plays with limit (multiple documents)
     const plays = await find("play", {
       userId: id
     }, null, { limit: 100 });
 
-    // ✅ Get voice profile (single document)
+    //  Get voice profile (single document)
     const voiceProfile = await findOne("voiceProfile", {
       userId: id
     });

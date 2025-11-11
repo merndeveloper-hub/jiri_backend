@@ -9,7 +9,7 @@ export const cleanExpiredCache = async () => {
       isFavorited: false,
       expiresAt: { $lt: new Date() }
     });
-    console.log(`🧹 Cleaned ${result.deletedCount} expired audio cache entries`);
+    console.log(`Cleaned ${result.deletedCount} expired audio cache entries`);
   } catch (error) {
     console.error('Cache cleanup error:', error);
   }
@@ -31,7 +31,7 @@ export const resetMonthlyLimits = async () => {
       }
     );
     
-    console.log('📅 Monthly limits reset');
+    console.log('Monthly limits reset');
   } catch (error) {
     console.error('Monthly reset error:', error);
   }

@@ -7,7 +7,7 @@ const getVoices = async (req, res) => {
   try {
     const id = req.params.id;
 
-    // ✅ Get user
+    //  Get user
     const user = await findOne("user", { _id: id });
 
     if (!user) {
@@ -19,7 +19,7 @@ const getVoices = async (req, res) => {
 
     console.log(user, "users");
 
-    // ✅ Get story IDs from favorites array
+    //  Get story IDs from favorites array
 const getVoice = await findAndSort("voiceProfile", { userId: id },{ createdAt: -1 })
 
     return res.status(200).send({
@@ -28,7 +28,7 @@ const getVoice = await findAndSort("voiceProfile", { userId: id },{ createdAt: -
     });
 
   } catch (error) {
-    console.error("❌ Error fetching favorites:", error);
+    console.error(" Error fetching favorites:", error);
     return res.status(500).send({
       status: 500,
       message: error.message || "An unexpected error occurred."

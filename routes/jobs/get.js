@@ -29,12 +29,12 @@ const getJobs = async (req, res) => {
  const jobs = await getDataWithLimit(
       "job",
       query,
-      {},  // ✅ Yeh missing tha
+      {}, 
      {},
      {limit: 20}
     );
 
-    //const jobs = await Job.find(query).sort('-createdAt').limit(20);
+
     
     return res.status(200).send({
       status: 200,

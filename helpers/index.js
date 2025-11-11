@@ -1,7 +1,4 @@
 import Models from "../models/index.js"
-
-
-
 import axios from "axios";
 
 
@@ -19,34 +16,14 @@ const insertNewDocument = async (modelDb, storeObj) => {
 };
 
 const insertManyDocuments = async (modelDb, storeObj) => {
-  
-    // Insert multiple documents into the specified model
-    const result = await Models[modelDb].insertMany([storeObj]);
-    return result; // Return the result of the insert operation
- 
+
+  // Insert multiple documents into the specified model
+  const result = await Models[modelDb].insertMany([storeObj]);
+  return result; // Return the result of the insert operation
+
 };
 
 
-
-// const updateDocument = async (modelDb, updateQuery, setQuery) =>
-//   await Models[modelDb]
-//     .findOneAndUpdate(updateQuery, { $set: setQuery }, { new: true })
-//     .lean();
-
-// const updateDocument = async (modelDb, updateQuery, setQuery) => {
-//   // If `setQuery` contains `$inc`, don't wrap it inside `$set`
-//   let updateOperation = {};
-
-//   if (setQuery.$inc) {
-//     updateOperation = setQuery;
-//   } else {
-//     updateOperation = { $set: setQuery };
-//   }
-
-//   return await Models[modelDb]
-//     .findOneAndUpdate(updateQuery, updateOperation, { new: true })
-//     .lean();
-// };
 
 const updateDocument = async (modelDb, updateQuery, setQuery) => {
   // Detect if the operation already uses an update operator (like $pull, $push, etc.)
@@ -146,50 +123,7 @@ const findSliceAndPopulateNested = async (
 ) =>
   await Models[modelDb].find(searchQuery, sliceQuery).populate(populate).lean();
 
-// Firebase file upload function
-// const firebaseFileUpload = (dbFilePath, fileName, filePath) => {
-//   return new Promise((resolve) => {
-//     const storageRef = ref(storage, dbFilePath + fileName);
-//     const theFile = fs.readFileSync(filePath);
-//     const uploadTask = uploadBytesResumable(storageRef, theFile);
-//     uploadTask.on(
-//       "state_changed",
-//       (snapshot) => {
-//         const progress =
-//           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//         console.log("Upload is " + progress + "% done");
-//         switch (snapshot.state) {
-//           case "paused":
-//             console.log("Upload is paused");
-//             break;
-//           case "running":
-//             console.log("Upload is running");
-//             break;
-//         }
-//       },
-//       (error) => {
-//         switch (error.code) {
-//           case "storage/unauthorized":
-//             console.log(error.code);
-//             break;
-//           case "storage/canceled":
-//             console.log(error.code);
-//             break;
-//           case "storage/unknown":
-//             console.log(error.code);
-//             break;
-//         }
-//       },
-//       () => {
-//         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-//           console.log("File available at", downloadURL);
-//           fs.unlinkSync(filePath);
-//           resolve(downloadURL);
-//         });
-//       }
-//     );
-//   });
-// };
+
 
 const getAggregate = async (modelDb, aggregateQuery) =>
   await Models[modelDb].aggregate(aggregateQuery);
@@ -217,26 +151,26 @@ const findOneSliceAndCustomPopulate = async (
     .populate(customQuery)
     .lean();
 
-const getDataWithLimit = async (modelDb, searchQuery,sortedBy, skip, limit) =>
+const getDataWithLimit = async (modelDb, searchQuery, sortedBy, skip, limit) =>
   await Models[modelDb]
     .find(searchQuery)
-     .sort(sortedBy)
+    .sort(sortedBy)
     .skip(skip)
     .limit(limit)
     .exec();
 
-    // REQ and RES logs Get
+// REQ and RES logs Get
 const getDataWithLimitLogs = async (modelDb, searchQuery, sortedBy, skip, limit) => {
   return await Models[modelDb].aggregate([
     { $match: searchQuery },
     { $sort: sortedBy },
     { $skip: skip },
     { $limit: limit }
-  ],{ allowDiskUse: true }); // ✅ this is the correct syntax
+  ], { allowDiskUse: true }); // ✅ this is the correct syntax
 };
 
 // Sort data with limit--------------------------------------------
-const getDataWithSort = async (modelDb, searchQuery,skip, limit) =>
+const getDataWithSort = async (modelDb, searchQuery, skip, limit) =>
   await Models[modelDb]
     .find(searchQuery)
     //.sort(sortedBy)
@@ -267,15 +201,14 @@ const isValidURL = (string) => {
   var res = string?.match(
     /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
   );
-  // console.log(res);
+ 
   return res !== null;
 };
 
 const axiosGetCall = async (url) => {
   try {
     const response = await axios.get(url);
-    // console.log("response", response);
-    // console.log(await axios.get(url));
+  
     return response.data;
   } catch (error) {
     // return { tokenUriError: "some error occured " };

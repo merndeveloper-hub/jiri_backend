@@ -8,16 +8,15 @@ const voiceProfileSchema = new mongoose.Schema(
     userId: {
       type: SchemaType.ObjectID,
       ref: "User",
-      required: true,
+     
     },
     firebaseUid: {
       type: SchemaType.TypeString,
-     // required: true,
-      index: true,
+     
     },
     voiceId: {
       type: SchemaType.TypeString,
-   //   required: true,
+  
     },
     name: {
       type: SchemaType.TypeString,

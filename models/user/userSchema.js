@@ -7,24 +7,22 @@ const userSchema = new mongoose.Schema(
     firebaseUid: {
       type: SchemaType.TypeString,
     },
-     password: {
+    password: {
       type: SchemaType.TypeString,
     },
     email: {
       type: SchemaType.TypeString,
       required: true,
-     // unique: true,
-    //  lowercase: true,
-     // trim: true
+
     },
-  
+
     name: {
       type: SchemaType.TypeString,
       trim: true
     },
-     language: {
+    language: {
       type: SchemaType.TypeString,
-     // trim: true
+
     },
     plan: {
       type: SchemaType.TypeString,
@@ -38,11 +36,11 @@ const userSchema = new mongoose.Schema(
     },
     stripeCustomerId: {
       type: SchemaType.TypeString,
-      //sparse: true
+
     },
     stripeSubscriptionId: {
       type: SchemaType.TypeString,
-     // sparse: true
+
     },
     subscriptionDetails: {
       priceId: {
@@ -71,14 +69,11 @@ const userSchema = new mongoose.Schema(
         type: SchemaType.TypeDate,
       }
     },
-    // voiceProfileId: {
-    //   type: SchemaType.ObjectID,
-    //   ref:"voiceProfile"
-    // },
-     voiceProfileId: [
+
+    voiceProfileId: [
       {
         type: SchemaType.ObjectID,
-      ref:"voiceProfile"
+        ref: "voiceProfile"
       },
     ],
     favorites: [
@@ -99,7 +94,7 @@ const userSchema = new mongoose.Schema(
       },
       month_key: {
         type: SchemaType.TypeString,
-        default: function() {
+        default: function () {
           return new Date().toISOString().slice(0, 7);
         }
       },
@@ -112,9 +107,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Indexes for faster queries
-// userSchema.index({ email: 1 });
-// userSchema.index({ stripeCustomerId: 1 });
-// userSchema.index({ stripeSubscriptionId: 1 });
+
 
 export default userSchema;

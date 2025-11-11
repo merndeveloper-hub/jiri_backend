@@ -4,7 +4,7 @@
 
 import Stripe from "stripe";
 import { updateDocument } from "../../helpers/index.js";
-import SubscriptionTransaction from "../../models/SubscriptionTransaction.js";
+
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -15,21 +15,21 @@ const stripeWebhook = async (req, res) => {
   let event;
 
   try {
-    // ✅ Verify webhook signature
+    //  Verify webhook signature
     event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err) {
-    console.error('⚠️ Webhook signature verification failed:', err.message);
+    console.error(' Webhook signature verification failed:', err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  console.log("✅ Webhook event received:", event.type);
+  console.log(" Webhook event received:", event.type);
 
-  // ✅ Handle different event types
+  // Handle different event types
   try {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object;
-        console.log("💳 Payment successful:", session.id);
+        console.log(" Payment successful:", session.id);
         break;
       }
 
@@ -42,7 +42,7 @@ const stripeWebhook = async (req, res) => {
           subscriptionStatus: "active"
         });
 
-        console.log("✅ Subscription created for user:", userId);
+        console.log(" Subscription created for user:", userId);
         break;
       }
 
@@ -56,7 +56,7 @@ const stripeWebhook = async (req, res) => {
           "subscriptionDetails.currentPeriodEnd": new Date(subscription.current_period_end * 1000)
         });
 
-        console.log("✅ Subscription updated for user:", userId);
+        console.log(" Subscription updated for user:", userId);
         break;
       }
 
@@ -71,7 +71,7 @@ const stripeWebhook = async (req, res) => {
           subscriptionDetails: null
         });
 
-        console.log("❌ Subscription cancelled for user:", userId);
+        console.log(" Subscription cancelled for user:", userId);
         break;
       }
 
@@ -83,7 +83,7 @@ const stripeWebhook = async (req, res) => {
           subscriptionStatus: "past_due"
         });
 
-        console.log("⚠️ Payment failed for subscription:", subscription);
+        console.log(" Payment failed for subscription:", subscription);
         break;
       }
 
@@ -94,7 +94,7 @@ const stripeWebhook = async (req, res) => {
     res.json({ received: true });
 
   } catch (error) {
-    console.error("❌ Error processing webhook:", error);
+    console.error(" Error processing webhook:", error);
     res.status(500).send("Webhook processing failed");
   }
 };

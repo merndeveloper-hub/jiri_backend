@@ -16,7 +16,7 @@ const favoriteSchema = Joi.object({
 
 const manageFavorites = async (req, res) => {
   try {
-    // ✅ Validation
+    //  Validation
     await favoriteSchema.validateAsync(req.body);
     const id  = req.params.id
     const { storyId, action } = req.body;
@@ -30,7 +30,7 @@ const manageFavorites = async (req, res) => {
 //       });
 //     }
 
-    // ✅ Check if story exists
+    //  Check if story exists
     const storyExists = await findOne("story", { storyId: storyId });
     if (!storyExists) {
       return res.status(404).send({
@@ -39,7 +39,7 @@ const manageFavorites = async (req, res) => {
       });
     }
 
-    // ✅ Get current user
+    //  Get current user
     const user = await findOne("user", { _id: id });
     if (!user) {
       return res.status(404).send({
@@ -52,7 +52,7 @@ console.log(user,"users");
     let updatedUser;
 
     if (action === 'add') {
-      // ✅ Check if already in favorites
+      //  Check if already in favorites
       if (user.favorites && user.favorites.includes(storyId)) {
         return res.status(400).send({
           status: 400,
@@ -60,14 +60,14 @@ console.log(user,"users");
         });
       }
 
-      // ✅ Add to favorites using pushIntoArray
+      //  Add to favorites using pushIntoArray
       updatedUser = await pushIntoArray(
         "user",
         { _id: id },
         { favorites: storyId }
       );
 
-      // ✅ Update AudioCache (agar collection hai)
+      //  Update AudioCache (agar collection hai)
       await updateDocument(
         "audioCache",
         { userId: id, storyId: storyId },
@@ -75,7 +75,7 @@ console.log(user,"users");
       );
 
     } else if (action === 'remove') {
-      // ✅ Remove from favorites using $pull
+      //  Remove from favorites using $pull
       updatedUser = await updateDocument(
         "user",
         { _id: id },
@@ -83,7 +83,7 @@ console.log(user,"users");
         { new: true }
       );
 
-      // ✅ Update AudioCache
+      //  Update AudioCache
       await updateDocument(
         "audioCache",
         { userId: id, storyId: storyId },
@@ -91,14 +91,14 @@ console.log(user,"users");
       );
     }
 
-    // ✅ Update user's updatedAt
+    //  Update user's updatedAt
     await updateDocument(
       "user",
       { _id: id },
       { updatedAt: new Date() }
     );
 
-    // ✅ Get fresh user data with favorites
+    //  Get fresh user data with favorites
     const freshUser = await findOne("user", { _id: id });
 
     return res.status(200).send({ 
@@ -108,7 +108,7 @@ console.log(user,"users");
     });
 
   } catch (error) {
-    console.error("❌ Error managing favorites:", error);
+    console.error(" Error managing favorites:", error);
     return res.status(500).send({ 
       status: 500, 
       message: error.message || "An unexpected error occurred."

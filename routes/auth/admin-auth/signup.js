@@ -71,7 +71,7 @@ const adminSignup = async (req, res) => {
   } catch (error) {
 
     if (error.code === 11000) {
-      console.log(error, "error--------");
+    
 
       // Duplicate key error
       return res.status(400).send({

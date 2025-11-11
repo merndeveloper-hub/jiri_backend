@@ -17,7 +17,7 @@ const deleteUserAccount = async (req, res) => {
     const userId = req.params.id;
     const firebaseUid = req.firebaseUid;
 
-    // ✅ Get user
+    //  Get user
     const user = await findOne("user", { _id: userId });
 
     if (!user) {
@@ -27,7 +27,7 @@ const deleteUserAccount = async (req, res) => {
       });
     }
 
-    // ✅ Create deletion job
+    //  Create deletion job
     const jobId = `job_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
     const job = await insertNewDocument("job", {
@@ -42,9 +42,9 @@ const deleteUserAccount = async (req, res) => {
       }
     });
 
-    console.log("✅ Deletion job created:", jobId);
+    console.log(" Deletion job created:", jobId);
 
-    // ✅ Delete voice from runtime API (if exists)
+    //  Delete voice from runtime API (if exists)
     if (user.voiceId) {
       try {
         await axios.delete(`${RUNTIME_API_URL}/runtime/voices/${user.voiceId}`, {
@@ -52,25 +52,25 @@ const deleteUserAccount = async (req, res) => {
             'Authorization': req.headers.authorization 
           }
         });
-        console.log("✅ Voice deleted from runtime:", user.voiceId);
+        console.log(" Voice deleted from runtime:", user.voiceId);
       } catch (err) {
-        console.error("⚠️ Voice deletion error:", err.message);
+        console.error(" Voice deletion error:", err.message);
         // Continue with deletion even if voice API fails
       }
     }
 
-    // ✅ Cancel active Stripe subscription (if exists)
+    // Cancel active Stripe subscription (if exists)
     if (user.stripeSubscriptionId) {
       try {
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
         await stripe.subscriptions.cancel(user.stripeSubscriptionId);
-        console.log("✅ Stripe subscription cancelled:", user.stripeSubscriptionId);
+        console.log(" Stripe subscription cancelled:", user.stripeSubscriptionId);
       } catch (err) {
-        console.error("⚠️ Stripe cancellation error:", err.message);
+        console.error(" Stripe cancellation error:", err.message);
       }
     }
 
-    // ✅ Delete all related data using helper functions
+    //  Delete all related data using helper functions
     await Promise.all([
       // Delete voice profiles
       deleteManyDocument("voiceProfile", {  userId: user._id }),
@@ -94,15 +94,15 @@ const deleteUserAccount = async (req, res) => {
       })
     ]);
 
-    console.log("✅ All related data deleted");
+    console.log("All related data deleted");
 
-    // ✅ Delete user document
+    //  Delete user document
     await deleteDocument("user", { _id: user._id });
-    console.log("✅ User document deleted");
+    console.log(" User document deleted");
 
  
 
-    // ✅ Update job status to completed
+    //  Update job status to completed
     await updateDocument("job", { jobId: jobId }, {
       status: "completed",
       metadata: {
@@ -111,7 +111,7 @@ const deleteUserAccount = async (req, res) => {
       }
     });
 
-    console.log("✅✅✅ Account deletion completed successfully");
+    console.log("Account deletion completed successfully");
 
     return res.status(200).send({
       status: 200,
@@ -125,9 +125,9 @@ const deleteUserAccount = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("❌ Error deleting user account:", error);
+    console.error(" Error deleting user account:", error);
     
-    // ✅ Update job status to failed (if job was created)
+    //  Update job status to failed (if job was created)
     try {
       const jobId = `job_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       await updateDocument("job", { jobId: jobId }, {

@@ -5,13 +5,13 @@ const attemptSchema = new mongoose.Schema(
   {
     user_id: {
       type: SchemaType.ObjectID,
-      ref: "user",
-      required: true,
+      ref: "user"
+     
     },
     no_of_attempt: {
       type: SchemaType.TypeNumber,
-      default: 0,
-      required: true,
+      default: 0
+    
     },
     block_duration: {
       type: SchemaType.TypeDate,
