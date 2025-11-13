@@ -15,11 +15,9 @@ import sendOTPSignup from "../otpVerification/sendOTPSignup.js";
 import magicLinkSend from "../otpVerification/magicLink.js";
 
 const schema = Joi.object({
-  // first_Name: Joi.string().min(3).required(),
-  // last_Name: Joi.string().min(3).required(),
   email: Joi.string()
-    .email({ tlds: { allow: true } }) // Ensures a valid domain with TLD (e.g., .com, .org)
-    .pattern(new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) // Enforces common email rules
+    .email({ tlds: { allow: true } })
+    .pattern(new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))
     .required()
     .messages({
       "string.email": "Invalid email format",
@@ -28,32 +26,27 @@ const schema = Joi.object({
     }),
   magicLink: Joi.boolean(),
   isMedia: Joi.boolean(),
-  //password: Joi.string().required(),
-
-  //   .required()
-  //   .messages({
-  //     "string.pattern.base":
-  //       "Mobile number must be digits.",
-  //     "any.required": "Mobile number is required.",
-  //   }),
   password: Joi.string()
     .pattern(
       new RegExp(
         "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,30}$"
       )
     )
-    .required()
+    .when('isMedia', {
+      is: true,
+      then: Joi.optional(),
+      otherwise: Joi.required()
+    })
+    .when('magicLink', {
+      is: true,
+      then: Joi.optional(),
+      otherwise: Joi.required()
+    })
     .messages({
       "string.pattern.base":
         "Password must be 8-30 characters, including uppercase, lowercase, number & special character.",
+      "any.required": "Password is required"
     }),
-  // confirm_password: Joi.string().required().valid(Joi.ref("password")),
-  // status: Joi.string(),
-  // userType: Joi.string().required(),
-  // country: Joi.string().required(),
-  // state: Joi.string().required(),
-  // city: Joi.string().required(),
-  // zipCode: Joi.string().required()
 });
 
 const userSignup = async (req, res) => {
