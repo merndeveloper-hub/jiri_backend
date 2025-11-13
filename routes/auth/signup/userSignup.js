@@ -27,11 +27,11 @@ const schema = Joi.object({
   magicLink: Joi.boolean(),
   isMedia: Joi.boolean(),
   password: Joi.string()
-    .pattern(
-      new RegExp(
-        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,30}$"
-      )
-    )
+    // .pattern(
+    //   new RegExp(
+    //     "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,30}$"
+    //   )
+    // )
     .when('isMedia', {
       is: true,
       then: Joi.optional(),
@@ -44,7 +44,7 @@ const schema = Joi.object({
     })
     .messages({
       "string.pattern.base":
-        "Password must be 8-30 characters, including uppercase, lowercase, number & special character.",
+        "Password is required",
       "any.required": "Password is required"
     }),
 });
