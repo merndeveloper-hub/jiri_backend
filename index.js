@@ -94,7 +94,7 @@ app.use(errorMiddleware);
 app.get("/", async (req, res) => {
 
   req.log.info("Ping request received");
-  return res.status(200).json({ status: 200, message: "FirstStab" });
+  return res.status(200).json({ status: 200, message: "Lunebi" });
 });
 
 
@@ -128,7 +128,7 @@ const serverhttps = https
 
 server.listen(port, () => {
 
-  console.log(`Server is running on PORT http://localhost:${port}`);
+  console.log(`Server is running on PORT http://15.207.221.76:${port}`);
 
   log.info("HTTPS server started on ", port);
 

@@ -19,7 +19,7 @@ const users = {};
    const token = crypto.randomBytes(20).toString("hex");
   users[token] = { email, expires: Date.now() + 15 * 60 * 1000 }; // 15 min valid
 
-  const link = `http://localhost:5000/api/v1/auth/verifyMagicLink?otp=${token}&userEmail=${email}`;
+  const link = `http://15.207.221.76:5000/api/v1/auth/verifyMagicLink?otp=${token}&userEmail=${email}`;
 
     const otpRes = await insertNewDocument("userOTP", {
       userEmail: email,

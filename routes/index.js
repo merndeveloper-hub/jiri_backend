@@ -15,7 +15,7 @@ import voiceCloning  from "./voiceCloning/index.js"
 import storyGeneration  from "./storyGeneration/index.js"
 import uploadAudio  from "./uploadAudio/index.js"
 import refresh_token from "./check-token/index.js";
-
+import fcm from "./fcm/index.js";
 
 const router = express.Router();
 
@@ -49,6 +49,8 @@ router.use("/storyGeneration", storyGeneration);
 router.use("/uploadAudio", uploadAudio);
 
 router.use("/refresh_token", refresh_token);
+
+router.use("/fcm", fcm);
 
 
 export default router;

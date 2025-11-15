@@ -88,9 +88,7 @@ const stripeSuccess = async (req, res) => {
 
         console.log(" User subscription activated for userId:", userId);
 
-        //  Redirect to success page
-        // return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/subscription/success?plan=${session.metadata.plan}`);
-        return res.send("<html><body style='background:#fff;'></body></html>");
+              return res.send("<html><body style='background:#fff;'></body></html>");
     } catch (error) {
         console.error(" Error handling success:", error);
         return res.status(500).send({

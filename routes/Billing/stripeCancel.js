@@ -36,8 +36,6 @@ const stripeCancel = async (req, res) => {
 
     console.log(" Payment cancelled for session:", sessionId);
 
-    //  Redirect to cancel page
-  //  return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/subscription/cancelled`);
 return res.send("<html><body style='background:#fff;'></body></html>");
   } catch (error) {
     console.error(" Error handling cancellation:", error);

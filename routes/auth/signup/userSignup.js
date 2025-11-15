@@ -5,6 +5,7 @@ import {
   findOneAndSelect,
   getAggregate,
   deleteDocument,
+  find,
 } from "../../../helpers/index.js";
 import { JWT_EXPIRES_IN, JWT_EXPIRES_IN_REFRESH_TOKEN, REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } from "../../../config/index.js";
 import jwt from "jsonwebtoken";
@@ -26,27 +27,40 @@ const schema = Joi.object({
     }),
   magicLink: Joi.boolean(),
   isMedia: Joi.boolean(),
-  password: Joi.string()
-    // .pattern(
-    //   new RegExp(
-    //     "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,30}$"
-    //   )
-    // )
-    .when('isMedia', {
-      is: true,
-      then: Joi.optional(),
-      otherwise: Joi.required()
-    })
-    .when('magicLink', {
-      is: true,
-      then: Joi.optional(),
-      otherwise: Joi.required()
-    })
-    .messages({
-      "string.pattern.base":
-        "Password is required",
-      "any.required": "Password is required"
-    }),
+  // password: Joi.string()
+  //   // .pattern(
+  //   //   new RegExp(
+  //   //     "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,30}$"
+  //   //   )
+  //   // )
+  //   .when('isMedia', {
+  //     is: true,
+  //     then: Joi.optional(),
+  //     otherwise: Joi.required()
+  //   })
+  //   .when('magicLink', {
+  //     is: true,
+  //     then: Joi.optional(),
+  //     otherwise: Joi.required()
+  //   })
+  //   .messages({
+  //     "string.pattern.base":
+  //       "Password is required",
+  //     "any.required": "Password is required"
+  //   }),
+password: Joi.string()
+  .when('.', {
+    is: Joi.object({
+      isMedia: Joi.boolean().valid(true),
+      magicLink: Joi.boolean().valid(true)
+    }).unknown(),
+    then: Joi.optional(),
+    otherwise: Joi.required()
+  })
+  .messages({
+    "any.required": "Password is required"
+  }),
+
 });
 
 const userSignup = async (req, res) => {
@@ -90,20 +104,47 @@ const userSignup = async (req, res) => {
       // status: "Active",
     });
 
-    if (user) {
-      if (!user?.password) {
-        return res
-          .status(400)
-          .send({ status: 400, message: "No Password found" });
-      }
-      const passwordIsValid = bcrypt.compareSync(password, user?.password);
-      if (!passwordIsValid) {
+    // if (user) {
+    //   if (!user?.password) {
+    //     return res
+    //       .status(400)
+    //       .send({ status: 400, message: "No Password found" });
+    //   }
+    //   const passwordIsValid = bcrypt.compareSync(password, user?.password);
+    //   if (!passwordIsValid) {
 
-        return res
-          .status(400)
-          .send({ status: 400, message: "Invalid Email or Password!" });
-      }
+    //     return res
+    //       .status(400)
+    //       .send({ status: 400, message: "Invalid Email or Password!" });
+    //   }
+    // }
+    if (user) {
+
+  // IF login is password-based
+  if (!isMedia && !magicLink) {
+
+    if (!user?.password) {
+      return res
+        .status(400)
+        .send({ status: 400, message: "No Password found" });
     }
+
+    if (!password) {
+      return res
+        .status(400)
+        .send({ status: 400, message: "Password is required!" });
+    }
+
+    const passwordIsValid = bcrypt.compareSync(password, user.password);
+
+    if (!passwordIsValid) {
+      return res
+        .status(400)
+        .send({ status: 400, message: "Invalid Email or Password!" });
+    }
+  }
+}
+
     if (!user) {
       req.body.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
       user = await insertNewDocument("user", {
@@ -114,38 +155,7 @@ const userSignup = async (req, res) => {
 
       });
     }
-    // const mobileExist = await findOneAndSelect("user", { mobile, status: "Active" });
-    // if (mobileExist) {
-    //   return res
-    //     .status(400)
-    //     .send({ status: 400, message: "Mobile number already exists with this email" });
-    // }
-    // const user_type = await findOne("userType", { type });
-
-    // if (!user_type) {
-    //   return res
-    //     .status(401)
-    //     .send({ status: 401, message: "No User Type Found" });
-    // }
-
-
-    // const userCount = await getAggregate("user", [
-    //   {
-    //     $match: { status: "Active", userType: "pro" },
-    //   },
-    //   { $count: "activeProUsers" },
-    //   {
-    //     $sort: {
-    //       _id: -1,
-    //     },
-    //   },
-    // ]);
-    // const user = await findOne("user", {
-
-    //   email,
-
-
-    // });
+   
 
 
 
@@ -180,6 +190,16 @@ const userSignup = async (req, res) => {
     });
 
     req.userId = user._id;
+
+      let fcmTokens = await find("token", { user_id: user._id });
+      //res.cookie("refreshToken", refresh_token, { httpOnly: true, secure: true, sameSite: "Strict" });
+
+      // return res
+      //   .status(200)
+      //   .send({
+      //     status: 200,
+      //     data: { user, region: region, token, refresh_token, fcmTokens },
+      //   });
     if (magicLink) {
       console.log("1");
 
@@ -215,7 +235,7 @@ const userSignup = async (req, res) => {
         message: "OTP sent to your email. Check inbox to proceed.",
         data: {
           user,
-          //  token, refresh_token
+          data: { user, token, refresh_token, fcmTokens },
         },
       });
     }
