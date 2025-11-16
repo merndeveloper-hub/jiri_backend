@@ -3,7 +3,7 @@ import {admin} from "../../config/firebase/firebaseConfig.js"
 
 const sendNotification = async (req, res) => {
   try {
-    console.log(req.body, "body");
+  
 
     const { fcmToken, title, body, senderId } = req.body;
     // 1. Get receiver info
@@ -31,7 +31,7 @@ const sendNotification = async (req, res) => {
 
     // 3. Send notification
     const response = await admin.messaging().send(message);
-    console.log(response, "response");
+
 
     return res
       .status(200)

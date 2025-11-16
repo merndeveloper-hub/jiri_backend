@@ -17,7 +17,6 @@ const getVoices = async (req, res) => {
       });
     }
 
-    console.log(user, "users");
 
     //  Get story IDs from favorites array
 const getVoice = await findAndSort("voiceProfile", { userId: id },{ createdAt: -1 })

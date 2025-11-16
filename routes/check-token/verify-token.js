@@ -24,7 +24,7 @@ const refreshAccessToken = async (req, res) => {
         .status(401)
         .send({ status: 401, message: "Refresh token not found in DB!" });
     }
-console.log(isTokenExist,"istoken");
+
 
     // Step 2: Verify refresh token
     jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, async (err, decoded) => {

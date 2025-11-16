@@ -42,7 +42,7 @@ const deleteUserAccount = async (req, res) => {
       }
     });
 
-    console.log(" Deletion job created:", jobId);
+  
 
     //  Delete voice from runtime API (if exists)
     if (user.voiceId) {
@@ -52,7 +52,7 @@ const deleteUserAccount = async (req, res) => {
             'Authorization': req.headers.authorization 
           }
         });
-        console.log(" Voice deleted from runtime:", user.voiceId);
+  
       } catch (err) {
         console.error(" Voice deletion error:", err.message);
         // Continue with deletion even if voice API fails
@@ -94,11 +94,11 @@ const deleteUserAccount = async (req, res) => {
       })
     ]);
 
-    console.log("All related data deleted");
+  
 
     //  Delete user document
     await deleteDocument("user", { _id: user._id });
-    console.log(" User document deleted");
+  
 
  
 
@@ -111,7 +111,7 @@ const deleteUserAccount = async (req, res) => {
       }
     });
 
-    console.log("Account deletion completed successfully");
+    
 
     return res.status(200).send({
       status: 200,

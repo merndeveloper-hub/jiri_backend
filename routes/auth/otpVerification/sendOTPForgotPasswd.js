@@ -49,7 +49,7 @@ const sendOTPForgotPasswd = async (req, res) => {
       createdAt: Date.now(),
       expiresAt: Date.now() + 3600000,
     });
-  console.log(otpRes,"otpRes");
+  
   
     await send_email(
       "signuptemplate",
@@ -60,7 +60,7 @@ const sendOTPForgotPasswd = async (req, res) => {
       "Verify Your Email",
       email
     );
-console.log("finalres");
+
 
 await session.commitTransaction();
     session.endSession();

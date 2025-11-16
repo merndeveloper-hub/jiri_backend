@@ -17,7 +17,7 @@ const getFavorites = async (req, res) => {
       });
     }
 
-    console.log(user, "users");
+  
 
     //  Get story IDs from favorites array
     const storyIds = user.favorites || [];
@@ -64,7 +64,7 @@ const getFavorites = async (req, res) => {
       isFavorited: true
     }));
 
-    console.log(favorites, "favorites");
+  
 
     return res.status(200).send({
       status: 200,

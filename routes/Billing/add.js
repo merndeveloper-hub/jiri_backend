@@ -43,7 +43,7 @@ const createCheckoutSession = async (req, res) => {
 
     //  Validate price ID
     const planInfo = PRICE_TO_PLAN[priceId];
-    console.log(planInfo, "planifo");
+   
 
     if (!planInfo) {
       return res.status(400).send({
@@ -52,7 +52,7 @@ const createCheckoutSession = async (req, res) => {
       });
     }
 
-    console.log(" User found:", user.email);
+  
 
     //  Handle Stripe Customer
     let customerId = user.stripeCustomerId;
@@ -89,7 +89,7 @@ const createCheckoutSession = async (req, res) => {
         stripeCustomerId: customerId
       });
 
-      console.log(" New Stripe customer created:", customerId);
+     
     }
 
     //  Create checkout session
@@ -119,7 +119,6 @@ const createCheckoutSession = async (req, res) => {
       }
     });
 
-    console.log(" Checkout session created:", session.id);
 
 
     await insertNewDocument("subscriptionTransaction", {

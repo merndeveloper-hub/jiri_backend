@@ -14,14 +14,14 @@ const sendOTP = async (req, res) => {
   
     const user = await findOne("user", { email });
 
-    // console.log(user, "user");
+   
 
     // if (!user) {
     //   return res.status(400).send({ status: 400, message: "Invalid Email" });
     // }
 
     const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
-console.log(otp, "otp");
+
 
  
 
@@ -29,7 +29,7 @@ console.log(otp, "otp");
     const saltRounds = 10;
 
     const hashedOTP = await bcrypt.hash(otp, saltRounds);
-    console.log(hashedOTP, "hashedOTP");
+  
 
    
 
@@ -41,7 +41,7 @@ console.log(otp, "otp");
       createdAt: Date.now(),
       expiresAt: Date.now() + 3600000,
     });
-  console.log(otpRes,"otpRes");
+
   
     await send_email(
       "otpTemplate",
@@ -53,7 +53,7 @@ console.log(otp, "otp");
       "Your lunibi OTP Code",
       email
     );
-console.log("finalres");
+
 
   // return res.json({
   //     //status: "Pending",

@@ -47,7 +47,7 @@ const manageFavorites = async (req, res) => {
         message: "User not found"
       });
     }
-console.log(user,"users");
+
 
     let updatedUser;
 

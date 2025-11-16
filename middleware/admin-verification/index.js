@@ -34,7 +34,7 @@ const adminVerification = async (req, res, next) => {
           message: "No user-type found",
         });
       }
-      console.log("USerType", checkType);
+    
       const accessArr = ["Owner", "Admin", "Moderator", "Creator", "Director"];
       if (!accessArr.includes(checkType.type)) {
         return res.status(400).send({

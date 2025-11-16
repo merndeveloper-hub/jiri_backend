@@ -15,7 +15,7 @@ const logout = async (req, res) => {
     const { id } = req.params;
 
     const deleteToken = await deleteDocument("token", { user_id: id });
-    console.log(deleteToken, "delete");
+   
 
     if (!deleteToken || deleteToken.deletedCount === 0) {
       return res.status(400).send({

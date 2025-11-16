@@ -33,7 +33,7 @@ const verifyMagicLink = async (req, res) => {
         userEmail,
         status:"Pending"
       });
-      console.log(UserOTPVerificationRecords,"UserOTPVerificationRecords----------");
+     
       
       if (!UserOTPVerificationRecords || UserOTPVerificationRecords.length == 0) {
         // no record found
@@ -42,7 +42,7 @@ const verifyMagicLink = async (req, res) => {
       } else {
         // user otp record exists
         const { expiresAt } = UserOTPVerificationRecords[0];
-        console.log(expiresAt,"expireat----------------");
+        
         
         const hashedOTP = UserOTPVerificationRecords[0].otp;
 

@@ -29,7 +29,7 @@ const users = {};
       createdAt: Date.now(),
       expiresAt: Date.now() + 3600000,
     });
-  console.log(otpRes,"otpRes");
+
   
     await send_email(
       "otpTemplate",
