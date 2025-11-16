@@ -19,6 +19,7 @@ if(!user){
       email: user.email,
       name: user.name,
       plan: user.plan,
+      profile:user?.profile,
       subscriptionStatus: user.subscriptionStatus,
       limits: user.limits,
       voice: voiceProfile ? {
