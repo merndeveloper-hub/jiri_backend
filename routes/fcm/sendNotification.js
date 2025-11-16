@@ -5,7 +5,7 @@ const sendNotification = async (req, res) => {
   try {
     console.log(req.body, "body");
 
-    const { fcmToken, title, body, senderId, receiverId } = req.body;
+    const { fcmToken, title, body, senderId } = req.body;
     // 1. Get receiver info
     // const receiver = await db.users.findOne({ id: receiverId });
     const sender = await findOne("user", { _id: senderId });
@@ -15,18 +15,18 @@ const sendNotification = async (req, res) => {
         .json({ status: 400, message: "Sender Not Found!" });
     }
 
-    const receiver = await findOne("user", { _id: receiverId });
-    if (!receiver) {
-      return res
-        .status(400)
-        .json({ status: 400, message: "Receiver Not Found!" });
-    }
+    // const receiver = await findOne("user", { _id: receiverId });
+    // if (!receiver) {
+    //   return res
+    //     .status(400)
+    //     .json({ status: 400, message: "Receiver Not Found!" });
+    // }
 
     // 2. Create message
     const message = {
       notification: { title, body },
       token: fcmToken,
-      data: { senderId: String(senderId), receiverId: String(receiverId) }, // optional
+      data: { senderId: String(senderId) }, // optional
     };
 
     // 3. Send notification

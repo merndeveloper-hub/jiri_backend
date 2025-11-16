@@ -3,258 +3,169 @@ import {
   findOne,
   insertNewDocument,
   findOneAndSelect,
-  getAggregate,
-  deleteDocument,
-  find,
 } from "../../../helpers/index.js";
-import { JWT_EXPIRES_IN, JWT_EXPIRES_IN_REFRESH_TOKEN, REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } from "../../../config/index.js";
+import {
+  JWT_EXPIRES_IN,
+  JWT_EXPIRES_IN_REFRESH_TOKEN,
+  REFRESH_TOKEN_SECRET,
+  ACCESS_TOKEN_SECRET
+} from "../../../config/index.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-//import mongoose from "mongoose";
 import sendOTPSignup from "../otpVerification/sendOTPSignup.js";
-
 import magicLinkSend from "../otpVerification/magicLink.js";
 
-const schema = Joi.object({
+// ---------------- VALIDATION ----------------
+const schemaBetter = Joi.object({
   email: Joi.string()
-    .email({ tlds: { allow: true } })
-    .pattern(new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))
-    .required()
-    .messages({
-      "string.email": "Invalid email format",
-      "any.required": "Email is required",
-      "string.pattern.base": "Invalid email structure",
-    }),
-  magicLink: Joi.boolean(),
-  isMedia: Joi.boolean(),
-  // password: Joi.string()
-  //   // .pattern(
-  //   //   new RegExp(
-  //   //     "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,30}$"
-  //   //   )
-  //   // )
-  //   .when('isMedia', {
-  //     is: true,
-  //     then: Joi.optional(),
-  //     otherwise: Joi.required()
-  //   })
-  //   .when('magicLink', {
-  //     is: true,
-  //     then: Joi.optional(),
-  //     otherwise: Joi.required()
-  //   })
-  //   .messages({
-  //     "string.pattern.base":
-  //       "Password is required",
-  //     "any.required": "Password is required"
-  //   }),
-password: Joi.string()
-  .when('.', {
-    is: Joi.object({
-      isMedia: Joi.boolean().valid(true),
-      magicLink: Joi.boolean().valid(true)
-    }).unknown(),
-    then: Joi.optional(),
-    otherwise: Joi.required()
-  })
-  .messages({
+    .email()
+    .required(),
+
+  isMedia: Joi.boolean().default(false),
+  magicLink: Joi.boolean().default(false),
+
+  password: Joi.alternatives().conditional(
+    Joi.ref('isMedia'),
+    {
+      is: true,
+      then: Joi.string().optional().allow(''),
+      otherwise: Joi.alternatives().conditional(
+        Joi.ref('magicLink'),
+        {
+          is: true,
+          then: Joi.string().optional().allow(''),
+          otherwise: Joi.string().required()
+        }
+      )
+    }
+  ).messages({
     "any.required": "Password is required"
   }),
 
+  mobile: Joi.string().optional(),
+  country: Joi.string().optional(),
+  userType: Joi.string().optional(),
 });
 
+// ---------------- CONTROLLER ----------------
 const userSignup = async (req, res) => {
-  // const session = await mongoose.startSession();
-  // session.startTransaction();
-
   try {
 
-    await schema.validateAsync(req.body)
-    // const { error, value } = schema.validate(req.body, { abortEarly: false });
-
-    // if (error) {
-    //   console.error("Validation Error:", error);
-    //   return res
-    //     .status(400)
-    //     .json({ success: false, message: error.details[0].message });
-    // }
+    await schemaBetter.validateAsync(req.body);
 
     const {
-      country,
-      password,
-      magicLink,
       email,
+      password,
       isMedia,
-      mobile,
-      status,
-      userType,
-      first_Name,
-      last_Name,
+      magicLink
     } = req.body;
 
-    // const deleteEmailExist = await findOneAndSelect("user", { email, status: "InActive" });
-    // if (deleteEmailExist) {
-    //   await deleteDocument("user", { email });
-    // }
-    let user
-    // const emailExist = await findOneAndSelect("user", { email});
-    user = await findOneAndSelect("user", {
-      email,
-      // userType,
-      // status: "Active",
-    });
+    let user = await findOneAndSelect("user", { email });
 
-    // if (user) {
-    //   if (!user?.password) {
-    //     return res
-    //       .status(400)
-    //       .send({ status: 400, message: "No Password found" });
-    //   }
-    //   const passwordIsValid = bcrypt.compareSync(password, user?.password);
-    //   if (!passwordIsValid) {
-
-    //     return res
-    //       .status(400)
-    //       .send({ status: 400, message: "Invalid Email or Password!" });
-    //   }
-    // }
+    // --------------- LOGIN FLOW ---------------
     if (user) {
+      // Normal password login
+      if (!isMedia && !magicLink) {
+        if (!user.password) {
+          return res.status(400).send({
+            status: 400,
+            message: "No Password found"
+          });
+        }
 
-  // IF login is password-based
-  if (!isMedia && !magicLink) {
+        if (!password) {
+          return res.status(400).send({
+            status: 400,
+            message: "Password is required!"
+          });
+        }
 
-    if (!user?.password) {
-      return res
-        .status(400)
-        .send({ status: 400, message: "No Password found" });
+        const passwordIsValid = bcrypt.compareSync(password, user.password);
+        if (!passwordIsValid) {
+          return res.status(400).send({
+            status: 400,
+            message: "Invalid Email or Password!"
+          });
+        }
+      }
     }
 
-    if (!password) {
-      return res
-        .status(400)
-        .send({ status: 400, message: "Password is required!" });
-    }
-
-    const passwordIsValid = bcrypt.compareSync(password, user.password);
-
-    if (!passwordIsValid) {
-      return res
-        .status(400)
-        .send({ status: 400, message: "Invalid Email or Password!" });
-    }
-  }
-}
-
+    // --------------- SIGNUP FLOW ---------------
     if (!user) {
-      req.body.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+      let hashPass = null;
+
+      // Only hash password if password provided
+      if (!isMedia && !magicLink) {
+        hashPass = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+      }
+
       user = await insertNewDocument("user", {
-
         email,
-        password: req.body.password
-
-
+        password: hashPass   // if media, password = null
       });
     }
-   
 
-
-
-    var token = jwt.sign({ id: user._id, role: user }, ACCESS_TOKEN_SECRET, {
+    // ---------------- JWT TOKENS ----------------
+    const token = jwt.sign({ id: user._id }, ACCESS_TOKEN_SECRET, {
       expiresIn: JWT_EXPIRES_IN,
     });
-    var refresh_token = jwt.sign({ id: user._id, role: user }, REFRESH_TOKEN_SECRET, {
+
+    const refresh_token = jwt.sign({ id: user._id }, REFRESH_TOKEN_SECRET, {
       expiresIn: JWT_EXPIRES_IN_REFRESH_TOKEN,
     });
 
-    const inserttoken = await insertNewDocument("token", {
-      user_id: user._id,
-      accessToken: token,
-      refreshToken: refresh_token,
-      type: "refresh",
-    });
-
-    // Set Access Token in Cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production" ? true : false, // sirf prod me https
-      sameSite: "none",
-      maxAge: 1000 * 60 * 60 * 24 // 1 day (ya JWT_EXPIRES_IN ke hisaab se)
+      secure: false,
+      sameSite: "none"
     });
 
-    // Set Refresh Token in Cookie (optional)
     res.cookie("refreshToken", refresh_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production" ? true : false,
-      sameSite: "none",
-      maxAge: 1000 * 60 * 60 * 24 * 7 // 7 din
+      secure: false,
+      sameSite: "none"
     });
 
-    req.userId = user._id;
-
-      let fcmTokens = await find("token", { user_id: user._id });
-      //res.cookie("refreshToken", refresh_token, { httpOnly: true, secure: true, sameSite: "Strict" });
-
-      // return res
-      //   .status(200)
-      //   .send({
-      //     status: 200,
-      //     data: { user, region: region, token, refresh_token, fcmTokens },
-      //   });
+    // ---------------- SEND MAGIC LINK / OTP ----------------
     if (magicLink) {
-      console.log("1");
-
-      await magicLinkSend({ email })
-      // await session.commitTransaction();
-      // session.endSession();
+      await magicLinkSend({ email });
       return res.json({
         status: 200,
-        message: "Magic Link sent to your email. Check inbox to proceed.",
-        data: {
-          user,
-          //  token, refresh_token
-        },
-      });
-    } else if (isMedia) {
-      return res.json({
-        status: 200,
-        // message: "Magic Link sent to your email. Check inbox to proceed.",
-        data: {
-          user,
-          //  token, refresh_token
-        },
+        message: "Magic Link sent.",
+        data: { user, token, refresh_token }
       });
     }
 
-    else {
-
-      await sendOTPSignup({ email })
-      // await session.commitTransaction();
-      // session.endSession();
+    if (isMedia) {
       return res.json({
         status: 200,
-        message: "OTP sent to your email. Check inbox to proceed.",
-        data: {
-          user,
-          data: { user, token, refresh_token, fcmTokens },
-        },
+        message: "Media login successful.",
+        data: { user, token, refresh_token }
       });
     }
 
-    //   return res.status(200).send({ status: 200, data:{user, token} });
+    // Otherwise OTP
+    await sendOTPSignup({ email });
+
+    return res.json({
+      status: 200,
+      message: "OTP sent.",
+      data: { user, token, refresh_token }
+    });
+
   } catch (error) {
-    //  await session.abortTransaction();
-    // session.endSession();
     if (error.code === 11000) {
-      // Duplicate key error
       return res.status(400).send({
         status: 400,
-        message: "Email already exists. Please use a different email.",
+        message: "Email already exists",
       });
     }
-    // Handle other errors
+
     console.error("Error saving user:", error);
-    return res.status(400).send({ status: 400, error});
-    //  return res.status(400).send({ status: 400, message: e.message });
+    return res.status(400).send({
+      status: 400,
+      message: error.message,
+    });
   }
 };
 
